@@ -10,8 +10,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "app/src/main/**"
-      - "app/src/androidTest/**"
+      - "app/src/**"
       - "app/build.gradle.kts"
       - "core/**"
       - ".github/workflows/screenshots.yml"
