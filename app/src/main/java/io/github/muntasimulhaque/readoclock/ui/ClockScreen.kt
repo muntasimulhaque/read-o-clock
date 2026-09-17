@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
@@ -63,7 +65,10 @@ fun ClockScreen(
     onMoveBy: (Double) -> Unit,
 ) {
     val frame = remember { mutableStateOf(frameOf(reading())) }
-    val refresh = { frame.value = frameOf(reading()) }
+    // The frame loop lives for the whole composition, so it must read the
+    // latest reading function rather than the one it was born with.
+    val currentReading by rememberUpdatedState(reading)
+    val refresh = { frame.value = frameOf(currentReading()) }
 
     // A wake at every second boundary, and a short burst of frames through
     // the quartz bounce; between ticks the app sleeps. Dragging refreshes
@@ -123,8 +128,8 @@ fun ClockScreen(
                         val hand = HandPick.nearest(
                             pointX = (down.position.x - center.x).toDouble() / radius,
                             pointY = (down.position.y - center.y).toDouble() / radius,
-                            hourAngle = ClockTime.hourAngleDegrees(reading()),
-                            minuteAngle = ClockTime.minuteAngleDegrees(reading()),
+                            hourAngle = ClockTime.hourAngleDegrees(currentReading()),
+                            minuteAngle = ClockTime.minuteAngleDegrees(currentReading()),
                         )
                         drag(down.id) { change ->
                             val angle = ClockTime.angleDegrees(

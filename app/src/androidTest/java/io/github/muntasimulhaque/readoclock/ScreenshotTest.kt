@@ -7,6 +7,7 @@ import android.view.PixelCopy
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -124,12 +125,16 @@ class ScreenshotTest {
         secondsOfDay: Double,
     ) {
         push {
-            ClockScreen(
-                reading = { secondsOfDay },
-                onMinuteDrag = {},
-                onHourDrag = {},
-                onMoveBy = {},
-            )
+            // A fresh composition per scene: the frame loop must not carry
+            // one scene's reading into the next.
+            key(secondsOfDay) {
+                ClockScreen(
+                    reading = { secondsOfDay },
+                    onMinuteDrag = {},
+                    onHourDrag = {},
+                    onMoveBy = {},
+                )
+            }
         }
         lateinit var bitmap: Bitmap
         scenario.onActivity { activity -> bitmap = captureWindow(activity) }
