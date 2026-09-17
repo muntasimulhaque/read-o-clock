@@ -8,7 +8,8 @@ plugins {
 
 // The upload keystore's path and credentials live in keystore.properties in
 // the owner's vault, outside every repo, so no credential ever enters the
-// repository. When the file is absent (CI, a fresh clone) the release build
+// repository. CI instead provides the keystore through KEYSTORE_FILE and the
+// three secrets. When neither is present (a fresh clone) the release build
 // degrades to unsigned rather than failing.
 val keystoreLayouts = listOf(
     "BSCPLC/DM (Development)/Personal Docs/Pers/My Apps/Google Play Signing Key/Read-o-Clock/keystore.properties",
@@ -36,10 +37,17 @@ val keystoreStoreFile: java.io.File? = run {
         file("${kf.parentFile.absolutePath}/$name")
     }
 }
-val canSignRelease = keystoreStoreFile != null &&
-    releaseKeystore.containsKey("storePassword") &&
-    releaseKeystore.containsKey("keyAlias") &&
-    releaseKeystore.containsKey("keyPassword")
+
+val uploadStoreFile: java.io.File? = System.getenv("KEYSTORE_FILE")
+    ?.takeIf { it.isNotBlank() }
+    ?.let { file(it) } ?: keystoreStoreFile
+val uploadStorePassword: String? = System.getenv("KEYSTORE_PASSWORD") ?: releaseKeystore.getProperty("storePassword")
+val uploadKeyAlias: String? = System.getenv("KEY_ALIAS") ?: releaseKeystore.getProperty("keyAlias")
+val uploadKeyPassword: String? = System.getenv("KEY_PASSWORD") ?: releaseKeystore.getProperty("keyPassword")
+val canSignRelease = uploadStoreFile?.exists() == true &&
+    !uploadStorePassword.isNullOrEmpty() &&
+    !uploadKeyAlias.isNullOrEmpty() &&
+    !uploadKeyPassword.isNullOrEmpty()
 
 android {
     namespace = "io.github.muntasimulhaque.readoclock"
@@ -58,10 +66,10 @@ android {
     signingConfigs {
         if (canSignRelease) {
             create("release") {
-                storeFile = keystoreStoreFile
-                storePassword = releaseKeystore.getProperty("storePassword")
-                keyAlias = releaseKeystore.getProperty("keyAlias")
-                keyPassword = releaseKeystore.getProperty("keyPassword")
+                storeFile = uploadStoreFile
+                storePassword = uploadStorePassword
+                keyAlias = uploadKeyAlias
+                keyPassword = uploadKeyPassword
             }
         }
     }
@@ -122,4 +130,10 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0")
 
     testImplementation("junit:junit:4.13.2")
+
+    // Instrumented (emulator) screenshot capture: a bare ComponentActivity
+    // hosts each scene and PixelCopy grabs the window.
+    androidTestImplementation("androidx.test:core:1.7.0")
+    androidTestImplementation("androidx.test:runner:1.7.0")
+    androidTestImplementation("androidx.test.ext:junit:1.3.0")
 }

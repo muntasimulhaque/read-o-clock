@@ -22,7 +22,7 @@ import kotlin.math.sin
  */
 object IconMark {
 
-    enum class Mode { Foreground, Monochrome, LegacySquare, LegacyRound }
+    enum class Mode { Foreground, Monochrome, LegacySquare, LegacyRound, FullBleed }
 
     private const val Canvas = 108.0
     private const val LegacyCanvas = 88.0
@@ -56,9 +56,14 @@ object IconMark {
                 g.color = dark
                 g.fill(Ellipse2D.Double(0.0, 0.0, size.toDouble(), size.toDouble()))
             }
+            Mode.FullBleed -> {
+                g.color = dark
+                g.fillRect(0, 0, size, size)
+            }
             Mode.Foreground, Mode.Monochrome -> Unit
         }
-        val scale = size / (if (mode == Mode.LegacySquare || mode == Mode.LegacyRound) LegacyCanvas else Canvas)
+        val legacyCanvas = mode == Mode.LegacySquare || mode == Mode.LegacyRound || mode == Mode.FullBleed
+        val scale = size / (if (legacyCanvas) LegacyCanvas else Canvas)
         when (mode) {
             Mode.Monochrome -> drawRing(g, center, scale)
             else -> {

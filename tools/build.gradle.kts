@@ -46,3 +46,11 @@ tasks.register<JavaExec>("checkIcons") {
     mainClass = "io.github.muntasimulhaque.readoclock.tools.MakeIconsKt"
     args = listOf(rootDir.absolutePath, "--check")
 }
+
+tasks.register<JavaExec>("makeArt") {
+    group = "tools"
+    description = "Regenerate the store art (feature graphic, store icon)."
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "io.github.muntasimulhaque.readoclock.tools.MakeArtKt"
+    args = listOf(rootDir.absolutePath)
+}
