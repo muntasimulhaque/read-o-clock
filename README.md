@@ -5,8 +5,9 @@ the time. The hands are the teaching tool: drag either one and the whole
 gear train follows. Native Android, paid once, fully offline: no ads, no
 trackers, no accounts, no network, no permissions. Open source under MIT.
 
-Status: release 0.1 (versionCode 1) was submitted for Play review on
-17 September 2026.
+Status: release 0.2 (versionCode 2) is the current release candidate,
+built by CI at the latest-build release. Release 0.1 (versionCode 1) was
+submitted for Play review on 17 September 2026.
 
 <p align="center">
   <img src="play-store/screenshots/phone/02_one_oclock.png" width="170" alt="One o'clock: the hour hand on 1, the minute on 12">
@@ -24,7 +25,8 @@ Status: release 0.1 (versionCode 1) was submitted for Play review on
 
 One clock on one screen, nothing else. It opens on the real local time and
 keeps it, with a second hand that ticks the way a quartz wall clock ticks:
-one step per second, with the small overshoot and settle a real hand makes.
+one step per second, with the small overshoot and settle a real hand makes,
+and the soft click that goes with it.
 
 The hands are one gear train, the way a real clock's are. Move the long hand
 and the short hand follows it; move the short hand and the long hand winds
@@ -34,10 +36,11 @@ between the 3 and the 4. Let go near a whole minute and the hands settle
 onto it, so one o'clock can be exactly one o'clock with the second hand on
 its twelve. Once released, the whole clock runs.
 
-There is no menu, no settings, no digital readout, and no sound. Anywhere on
-the dial picks up the nearest hand, and the touch targets are huge. Closing
-and reopening the app returns the clock to the real time, so the next lesson
-starts clean.
+There is no menu, no settings, no digital readout, and nothing to tap but
+the hands: a drag anywhere on the dial picks up the nearest one, and a tap
+alone moves nothing. The only sound is the clock's own tick, one soft click
+with each step of the second hand. Closing and reopening the app returns
+the clock to the real time, so the next lesson starts clean.
 
 ## Private by construction
 
@@ -53,8 +56,10 @@ forever.
 core/     its own Gradle module, pure Kotlin, zero Android imports: the
           dial proportions, the gear law, the quartz tick, the setter,
           hand picking, the spoken time
-app/      Compose: the dial, numerals, ticks, hands, the drag; the host
-tools/    offline generators: design takes, launcher icon, store art
+app/      Compose: the dial, numerals, ticks, hands, the drag; the host and
+          the tick player
+tools/    offline generators: design takes, launcher icon, store art, the
+          tick
 ```
 
 The rules are pure data and functions; Android is a player of those rules,
@@ -78,14 +83,16 @@ Generated assets (run only after a deliberate design change, then commit):
 ./gradlew :tools:makeTakes            # design takes into build/takes, for review
 ./gradlew :tools:makeIcons            # the launcher icon set
 ./gradlew :tools:checkIcons           # fails if the committed icon bytes drift
+./gradlew :tools:makeTick             # the quartz tick WAV
+./gradlew :tools:checkTick            # fails if the committed tick bytes drift
 ./gradlew :tools:makeArt              # feature graphic and 512 store icon
 ```
 
 ## CI is the loop
 
-`build.yml` runs the rules tests, release lint, the icon pin, the debug APK
-and a minified release on every push that touches the app, and with the
-signing secrets present it publishes the signed AAB and APK to the
+`build.yml` runs the rules tests, release lint, the icon and tick pins, the
+debug APK and a minified release on every push that touches the app, and
+with the signing secrets present it publishes the signed AAB and APK to the
 `latest-build` release. `screenshots.yml` captures six scenes each on phone,
 7 inch and 10 inch API 35 emulators; those captures are the store
 screenshots and the human drift check after UI changes. Captures are

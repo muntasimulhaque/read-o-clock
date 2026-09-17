@@ -52,7 +52,11 @@ as a dead letter.
    no digital readout, no chrome. It resets to live local time on a cold
    start and does nothing else. While the app is open the screen stays
    on, fullscreen and immersive, portrait and landscape, phone and tablet.
-4. **Silent.** No sound of any kind in v1.
+4. **One small sound, the tick.** The second hand clicks softly once
+   per second, the way a quartz wall clock does, and that tick is the
+   only sound: no music, no voices, no effects, no in-app volume
+   control. It plays only while the screen is resumed and never while a
+   finger is dragging.
 5. **No depiction of animate beings.** No humans, animals, faces,
    mascots, or eyes on objects, in the app, the launcher icon, or the
    store art. The clock itself is the subject; warmth comes from
@@ -120,6 +124,7 @@ export JAVA_HOME="/c/Program Files/Android/Android Studio/jbr"   # not on PATH
 ./gradlew :tools:makeTakes                               # design takes into build/takes
 ./gradlew :tools:makeArt                                 # feature graphic and 512 store icon
 ./gradlew :tools:makeIcons :tools:checkIcons             # regenerate, then pin the launcher icon
+./gradlew :tools:makeTick :tools:checkTick               # regenerate, then pin the quartz tick
 ```
 
 ## Verifying UI: CI is the loop
@@ -129,9 +134,10 @@ code and never from a local emulator; a local headless capture once came
 back black and proved nothing. CI emulators render and capture reliably.
 
 - `build.yml` (every push touching app, core or tools, plus PRs and manual
-dispatch): rules tests, release lint, the icon pin, the debug APK, and a
-minified release AAB and APK. With the signing secrets present it also
-verifies the certificate and publishes both to the `latest-build` release.
+dispatch): rules tests, release lint, the icon and tick pins, the debug
+APK, and a minified release AAB and APK. With the signing secrets present
+it also verifies the certificate and publishes both to the `latest-build`
+release.
 - `screenshots.yml` (pushes touching the app or core): six scenes per form
 factor on API 35 emulators, phone, 7 inch and 10 inch, artifacts named
 `store-screenshots-*`.
@@ -185,14 +191,17 @@ core/                      pure Kotlin, zero Android imports:
   ClockLayout.kt           how large the clock is on a window
   DialPalette.kt           the chosen Schoolhouse palette (D-006)
   SpokenTime.kt            the words TalkBack says
-app/src/main/.../host/     ClockHost: the wall clock and the offset
+app/src/main/.../host/     ClockHost: the wall clock and the offset;
+                           TickPlayer: the audible quartz tick
 app/src/main/.../ui/       Compose: ClockScreen (frame loop, drag, TalkBack),
                            ClockDial, Numerals, Hands, ClockTheme
 app/src/androidTest/       ScreenshotTest.kt: the six store captures
 app/src/debug/             the debug-only bare host activity for the harness
 app/src/main/res/values/   strings.xml: every user-facing string
 app/src/main/res/font/     Baloo 2 (OFL), the numeral face
-tools/                     offline generators: takes, launcher icon, store art
+app/src/main/res/raw/      tick.wav: the synthesized second-hand click
+tools/                     offline generators: takes, launcher icon, store
+                           art, the tick
 docs/                      privacy.html, OFL-Baloo2.txt, decisions.md
 play-store/                listing kit, screenshots per form factor; aab/
                            holds only the build awaiting submission
@@ -204,6 +213,8 @@ Where truth lives, by question:
 - behavior and rules: `core/` and its tests.
 - a dial proportion: `core/ClockFace.kt`.
 - a word: `app/src/main/res/values/strings.xml` and `core/SpokenTime.kt`.
+- a sound: `app/src/main/res/raw/tick.wav` and its `:tools:makeTick`
+  generator.
 - a decision, or its history: `docs/decisions.md`.
 
 ## Glossary
@@ -213,6 +224,7 @@ Where truth lives, by question:
 - **the gear law**: hands are geared the way a clock's are; one time
   value, three views.
 - **the take**: one rendered design direction, in `build/takes`.
-- **the tick**: one quartz step, including its overshoot and settle.
+- **the tick**: one quartz step, including its overshoot, its settle,
+  and the soft click that goes with it.
 - **the dial, the case, the ring**: the face, its rim, and the ring of
   sixty ticks.

@@ -4,8 +4,9 @@ The owner's copy-paste sheet. Plain text throughout, because Play Console
 fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
-**Status: release 0.1 (versionCode 1) was submitted for review on
-17 September 2026.**
+**Status: release 0.2 (versionCode 2) is the current candidate, built by
+CI at the latest-build release. Release 0.1 (versionCode 1) was submitted
+for review on 17 September 2026.**
 
 ## Store art
 
@@ -19,7 +20,8 @@ hand. The launcher icon set comes from `:tools:makeIcons` and is pinned by
   a real dial at 10:10 on the left, and the name in the dial's own cream on
   the right, nothing behind it.
 - `play-store/play-icon-512.png`: the launcher mark, full bleed, no
-  pre-rounded corners.
+  pre-rounded corners. The 0.2 mark is 0.8 of the 0.1 mark; re-upload
+  this 512 icon with the 0.2 submission.
 
 ## The name
 
@@ -39,12 +41,12 @@ Read-o-Clock: Clock Reading
 Teach your child how to read the clock.
 ```
 
-**Full description** (Play allows 4000 characters; measured 1922).
+**Full description** (Play allows 4000 characters; measured 1967).
 Paragraphs are unwrapped on purpose: Play keeps the line breaks, so one
 line per paragraph pastes as a clean block.
 
 ```
-Read-o-Clock is one real wall clock on the screen, and nothing else. It opens on the real local time and keeps it, with a second hand that ticks the way a quartz wall clock ticks: one step a second, with the small overshoot and settle a real hand makes.
+Read-o-Clock is one real wall clock on the screen, and nothing else. It opens on the real local time and keeps it, with a second hand that ticks the way a quartz wall clock ticks: one step a second, with the small overshoot and settle a real hand makes, and the soft click that goes with it.
 
 Teaching time by hand
 Move the long hand or the short hand with a finger. The other hand follows the way real gears make it follow: move the minute hand and the hour hand creeps forward with it, move the hour hand and the minute hand winds around with it. The clock keeps running while you talk about it. Let go near a whole minute and the hands settle onto it, so one o'clock can be exactly one o'clock, with the second hand on its twelve.
@@ -53,7 +55,7 @@ A real clock, not a toy
 The hour hand sits exactly halfway between two numbers at half past, because that is where a real hour hand sits. There is no digital readout, no quiz screen, no score and no menu: just the clock, the way it hangs on the wall.
 
 Made for small hands
-Anywhere on the dial picks up the nearest hand, and the touch targets are huge. Nothing needs reading. Close the app and open it again and the clock is back on the real time, so the next lesson starts clean.
+A drag anywhere on the dial picks up the nearest hand, and the touch targets are huge. Nothing needs reading. Close the app and open it again and the clock is back on the real time, so the next lesson starts clean.
 
 A note for parents
 Children learn to read a clock by moving the hands themselves. Sit together, set the clock to breakfast time, then to bath time, and let your child move the hands back and forth. The clock is the whole lesson; there is nothing else to tap.
@@ -90,6 +92,12 @@ All answers are **No**: violence, sexuality, language, controlled
 substances, gambling, user interaction, sharing location, digital
 purchases. The expected outcome is the lowest rating, suitable for ages 3
 and up. The app shows no ads and no external links.
+
+## Release notes for 0.2 (Play allows 500 characters; measured 271)
+
+```
+The clock in the launcher icon sits smaller in its tile. A tap alone no longer moves a hand: drag one to set the time. And the second hand now sounds like a real wall clock, with a soft tick every second. Still one clock on one screen: no permissions, no network, no ads.
+```
 
 ## Release notes for 0.1 (Play allows 500 characters; measured 375)
 

@@ -107,3 +107,25 @@ read the clock." (39 characters), choosing the phrase parents actually
 type over the friendlier first draft. The launcher name stays Read-o-Clock,
 and the submission guide carries the submitted text and its measured
 counts. Rejected: "Read-o-Clock: Teach Kids Time" (the first draft).
+
+## D-009: The smaller mark, tap-safe hands, and the tick
+
+Date: 17 September 2026, the day of the 0.1 submission.
+
+Three changes the owner asked for after submitting 0.1. The launcher mark
+now sits at 0.8 of its old size (`MarkScale` in `IconMark.kt`), because
+the dial had filled the adaptive safe zone edge to edge; the launcher set
+and the 512 store icon were regenerated and the icon pin still holds. A
+finger must now cross touch slop before a hand moves: the hand is still
+picked at the down point, but a tap, however jittery, can no longer jump
+the nearest hand across the dial. And the second hand ticks: one soft
+synthesized click, written by `:tools:makeTick` to `res/raw/tick.wav` and
+played by `TickPlayer` only while the screen is resumed and only when the
+running clock advances one whole second.
+
+The tick reverses D-004, which rejected ticking sounds as chrome, and it
+overrides hard constraint 4's silence: the owner asked for the little
+sound a real wall clock makes, so the rules now allow exactly one. This is
+the 0.2 release candidate. Rejected for the tick: a `ToneGenerator` beep
+(not a clock), a bundled recording (license and drift), and ticks while
+dragging (a buzz the setting moment does not need).
