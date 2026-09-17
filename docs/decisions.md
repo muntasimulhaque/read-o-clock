@@ -187,5 +187,5 @@ short window the case nearly touches the screen and a hard clip would
 show at the edge; on the 10 inch landscape capture the shade dies before
 the screen does. The feature graphic and all eighteen store captures
 were regenerated from the same renderers. The owner approved both for
-the 0.4 release candidate (versionCode 4) and asked for the Play release
-the same day.
+the 0.4 release candidate (versionCode 4) and submitted it for Play
+review on 17 September 2026.

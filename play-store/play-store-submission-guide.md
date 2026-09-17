@@ -5,9 +5,9 @@ fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
 **Status: release 0.4 (versionCode 4), with the one-knock quartz tick and
-the shadow under the case, awaits Play submission. Release 0.3
-(versionCode 3), 0.2 (versionCode 2) and 0.1 (versionCode 1) were
-submitted on 17 September 2026.**
+the shadow under the case, was submitted for review on 17 September 2026.
+Releases 0.3 (versionCode 3), 0.2 (versionCode 2) and 0.1 (versionCode 1)
+were submitted earlier the same day.**
 
 ## Store art
 
