@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.ViewModelProvider
 import io.github.muntasimulhaque.readoclock.host.ClockHost
+import io.github.muntasimulhaque.readoclock.host.TickPlayer
 import io.github.muntasimulhaque.readoclock.ui.ClockScreen
 
 class MainActivity : ComponentActivity() {
@@ -16,6 +17,8 @@ class MainActivity : ComponentActivity() {
     private val host: ClockHost by lazy {
         ViewModelProvider(this)[ClockHost::class.java]
     }
+
+    private val ticker by lazy { TickPlayer(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +32,7 @@ class MainActivity : ComponentActivity() {
                 onMinuteDrag = host::setFromMinuteAngle,
                 onHourDrag = host::setFromHourAngle,
                 onMoveBy = host::moveBy,
+                onTick = ticker::tick,
             )
         }
     }
@@ -36,6 +40,11 @@ class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         keepBarsHidden()
+    }
+
+    override fun onDestroy() {
+        ticker.release()
+        super.onDestroy()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {

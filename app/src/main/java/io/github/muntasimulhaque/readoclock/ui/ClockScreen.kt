@@ -3,6 +3,7 @@ package io.github.muntasimulhaque.readoclock.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.awaitTouchSlopOrCancellation
 import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
@@ -31,6 +33,7 @@ import io.github.muntasimulhaque.readoclock.core.ClockTime
 import io.github.muntasimulhaque.readoclock.core.HandPick
 import io.github.muntasimulhaque.readoclock.core.SpokenTime
 import kotlinx.coroutines.delay
+import kotlin.math.floor
 import kotlin.math.round
 
 /**
@@ -63,12 +66,28 @@ fun ClockScreen(
     onMinuteDrag: (Double) -> Unit,
     onHourDrag: (Double) -> Unit,
     onMoveBy: (Double) -> Unit,
+    onTick: () -> Unit,
 ) {
     val frame = remember { mutableStateOf(frameOf(reading())) }
     // The frame loop lives for the whole composition, so it must read the
     // latest reading function rather than the one it was born with.
     val currentReading by rememberUpdatedState(reading)
+    val currentTick by rememberUpdatedState(onTick)
     val refresh = { frame.value = frameOf(currentReading()) }
+    val dragging = remember { mutableStateOf(false) }
+
+    // The tick is the movement's, not the finger's: one click when the
+    // running second hand steps forward a whole second. A drag turns the
+    // gear train by hand and stays silent, and so does a jump (resume, cold
+    // start, a TalkBack move), which is not a quartz step.
+    LaunchedEffect(Unit) {
+        var lastStep = floor(frame.value.seconds).toLong()
+        snapshotFlow { frame.value.seconds }.collect { seconds ->
+            val step = floor(seconds).toLong()
+            if (!dragging.value && step == lastStep + 1) currentTick()
+            lastStep = step
+        }
+    }
 
     // A wake at every second boundary, and a short burst of frames through
     // the quartz bounce; between ticks the app sleeps. Dragging refreshes
@@ -131,10 +150,17 @@ fun ClockScreen(
                             hourAngle = ClockTime.hourAngleDegrees(currentReading()),
                             minuteAngle = ClockTime.minuteAngleDegrees(currentReading()),
                         )
-                        drag(down.id) { change ->
+                        // A poke is not a drag: the hand only moves once the
+                        // finger has crossed touch slop, so a tap, however
+                        // jittery, never jumps a hand across the dial. The
+                        // hand was picked at the down point.
+                        val dragStart = awaitTouchSlopOrCancellation(down.id) { change, _ ->
+                            change.consume()
+                        } ?: return@awaitEachGesture
+                        fun moveHand(position: Offset) {
                             val angle = ClockTime.angleDegrees(
-                                x = change.position.x.toDouble(),
-                                y = change.position.y.toDouble(),
+                                x = position.x.toDouble(),
+                                y = position.y.toDouble(),
                                 centerX = center.x.toDouble(),
                                 centerY = center.y.toDouble(),
                             )
@@ -143,7 +169,16 @@ fun ClockScreen(
                                 ClockHand.Hour -> onHourDrag(angle)
                             }
                             refresh()
-                            change.consume()
+                        }
+                        dragging.value = true
+                        try {
+                            moveHand(dragStart.position)
+                            drag(down.id) { change ->
+                                moveHand(change.position)
+                                change.consume()
+                            }
+                        } finally {
+                            dragging.value = false
                         }
                     }
                 },

@@ -51,8 +51,8 @@ jobs:
 
       - name: Run unit tests, lint and asset pins
         # The rules are pure JVM tests, full lint catches what tests cannot,
-        # and :tools:checkIcons pins the committed launcher icon bytes.
-        run: ./gradlew :core:test :app:testReleaseUnitTest :app:lintRelease :tools:checkIcons
+        # and the :tools:check* tasks pin the committed icon and tick bytes.
+        run: ./gradlew :core:test :app:testReleaseUnitTest :app:lintRelease :tools:checkIcons :tools:checkTick
 
       - name: Build debug APK
         run: ./gradlew :app:assembleDebug

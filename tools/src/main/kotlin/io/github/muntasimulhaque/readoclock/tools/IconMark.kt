@@ -15,10 +15,10 @@ import kotlin.math.sin
  * paths only, no gradients, no strokes and no Area booleans, because the icon
  * bytes are pinned across machines and rasterizers (Puzzlet's lesson).
  *
- * The mark is sized in fractions of the icon canvas: the adaptive layers keep
- * a full-bleed disc inside the mask, and the legacy bitmaps carry their own
- * background, rounded square or circle, so pre-26 launchers see a finished
- * icon.
+ * The mark is sized in fractions of the icon canvas: the adaptive layers
+ * center the dial inside the mask with air around it, and the legacy bitmaps
+ * carry their own background, rounded square or circle, so pre-26 launchers
+ * see a finished icon.
  */
 object IconMark {
 
@@ -26,6 +26,12 @@ object IconMark {
 
     private const val Canvas = 108.0
     private const val LegacyCanvas = 88.0
+
+    // One knob for how large the clock sits in the canvas: every dimension
+    // below scales with it, so the whole mark shrinks or grows together and
+    // the dial keeps the proportions the app draws. At 1.0 the dial filled
+    // the adaptive safe zone edge to edge; the owner wanted air around it.
+    private const val MarkScale = 0.8
 
     private const val DialRadius = 33.0
     private const val RingThickness = 4.4
@@ -63,7 +69,7 @@ object IconMark {
             Mode.Foreground, Mode.Monochrome -> Unit
         }
         val legacyCanvas = mode == Mode.LegacySquare || mode == Mode.LegacyRound || mode == Mode.FullBleed
-        val scale = size / (if (legacyCanvas) LegacyCanvas else Canvas)
+        val scale = size / (if (legacyCanvas) LegacyCanvas else Canvas) * MarkScale
         when (mode) {
             Mode.Monochrome -> drawRing(g, center, scale)
             else -> {

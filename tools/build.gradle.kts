@@ -47,6 +47,22 @@ tasks.register<JavaExec>("checkIcons") {
     args = listOf(rootDir.absolutePath, "--check")
 }
 
+tasks.register<JavaExec>("makeTick") {
+    group = "tools"
+    description = "Regenerate the quartz tick WAV in app/src/main/res/raw."
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "io.github.muntasimulhaque.readoclock.tools.MakeTickKt"
+    args = listOf(rootDir.absolutePath)
+}
+
+tasks.register<JavaExec>("checkTick") {
+    group = "tools"
+    description = "Verify the committed tick WAV matches a fresh regeneration."
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "io.github.muntasimulhaque.readoclock.tools.MakeTickKt"
+    args = listOf(rootDir.absolutePath, "--check")
+}
+
 tasks.register<JavaExec>("makeArt") {
     group = "tools"
     description = "Regenerate the store art (feature graphic, store icon)."

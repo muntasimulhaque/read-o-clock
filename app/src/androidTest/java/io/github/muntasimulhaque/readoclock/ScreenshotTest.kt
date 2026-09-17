@@ -133,6 +133,7 @@ class ScreenshotTest {
                     onMinuteDrag = {},
                     onHourDrag = {},
                     onMoveBy = {},
+                    onTick = {},
                 )
             }
         }

@@ -3,11 +3,11 @@ package io.github.muntasimulhaque.readoclock.core
 import kotlin.math.floor
 
 /**
- * The time in the words a person says it, for TalkBack. The clock is silent,
- * so this is the only place the app ever speaks, and it speaks the way a
- * parent teaches: "half past three", "twenty five minutes past three",
- * "quarter to four". Seconds are not spoken; they are not part of reading a
- * clock.
+ * The time in the words a person says it, for TalkBack. The tick is the
+ * clock's only other sound, so this is the one place the app speaks words,
+ * and it speaks the way a parent teaches: "half past three", "twenty five
+ * minutes past three", "quarter to four". Seconds are not spoken; they are
+ * not part of reading a clock.
  */
 object SpokenTime {
     private val ones = listOf(
