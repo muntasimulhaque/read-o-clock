@@ -26,6 +26,9 @@ as a dead letter.
    from more than one machine, and no session builds on a stale head.
 3. Implement, then ask one question: anything else? The build waits for
    the owner's word; no `versionCode` moves until the session is done.
+4. Session end: append the session's decision entry to
+   `docs/decisions.md`, bring the README status and the submission guide
+   current, commit and push, and leave the tree clean.
 
 ## Hard constraints (non-negotiable)
 
@@ -97,10 +100,12 @@ as a dead letter.
   The first release is 0.1, then 0.2 through 0.9, then 1.0, 1.1 and on.
   The live numbers are in `app/build.gradle.kts`.
 - `targetSdk` moves only together with an AGP that supports it.
-- The signing keystore lives outside the repo (the owner's vault), with
-  its base64 twin in the `KEYSTORE_BASE64` GitHub secret and the
-  passwords in three more secrets. If it is lost, the app can never be
-  updated again. Local builds without it stay unsigned.
+- Signing uses the shared upload keystore in the owner's vault (D-007),
+  never in the repo. Its base64 twin and the passwords live in this repo's
+  `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS` and `KEY_PASSWORD`
+  secrets; a per-app keystore would win if one is ever created. Play App
+  Signing holds the app signing key, so a lost upload key can be reset
+  with Google, and the vault is backed up in a second place anyway.
 - Paid once on Play Console. No billing SDK in the app, ever.
 
 ## Build
@@ -111,13 +116,63 @@ export JAVA_HOME="/c/Program Files/Android/Android Studio/jbr"   # not on PATH
 ./gradlew :app:testReleaseUnitTest :app:lintRelease      # app tests and full lint
 ./gradlew :app:assembleDebug                             # installable debug build
 ./gradlew :app:assembleRelease                           # R8 release, signed when the keystore is present
+./gradlew :app:bundleRelease                             # the AAB that goes to Play
 ./gradlew :tools:makeTakes                               # design takes into build/takes
+./gradlew :tools:makeArt                                 # feature graphic and 512 store icon
 ./gradlew :tools:makeIcons :tools:checkIcons             # regenerate, then pin the launcher icon
 ```
 
-`app/src/androidTest` holds the screenshot harness; captures are
-reviewed from CI, never pre-checked on a local emulator. `.github/`
-workflows are the CI truth.
+## Verifying UI: CI is the loop
+
+UI changes are verified from CI screenshot artifacts, never by reading
+code and never from a local emulator; a local headless capture once came
+back black and proved nothing. CI emulators render and capture reliably.
+
+- `build.yml` (every push touching app, core or tools, plus PRs and manual
+dispatch): rules tests, release lint, the icon pin, the debug APK, and a
+minified release AAB and APK. With the signing secrets present it also
+verifies the certificate and publishes both to the `latest-build` release.
+- `screenshots.yml` (pushes touching the app or core): six scenes per form
+factor on API 35 emulators, phone, 7 inch and 10 inch, artifacts named
+`store-screenshots-*`.
+- The harness is `app/src/androidTest/.../ScreenshotTest.kt`; its bare host
+activity is declared debug-only in `app/src/debug/AndroidManifest.xml`.
+- A no-change refresh must come back byte-identical: compare captured PNGs
+with `cmp` against `play-store/screenshots/`. Byte noise is not drift.
+- `gh run download` has no `--clobber`; a failed re-download leaves the old
+files in place and looks like unchanged captures.
+
+## Releasing
+
+Small commits, plain messages, no AI trailers. A release candidate bumps
+`versionCode` +1 and lets `versionName` follow the walk, pushes to `main`,
+and CI does the rest, ending at the `latest-build` release:
+
+```sh
+gh release download latest-build -R muntasimulhaque/read-o-clock -p "*.aab" -D play-store/aab
+```
+
+The AAB sits in `play-store/aab/` until the owner confirms the Play
+submission; then DELETE it, so a stale build can never be uploaded twice.
+Release notes arrive in chat as bare plain text, under 500 characters,
+counted before handing them over, and are stored in the submission guide.
+The listing kit and the Console answers live in
+`play-store/play-store-submission-guide.md`. The privacy policy is served
+from `docs/privacy.html` by GitHub Pages.
+
+## Traps that already bit
+
+- On a geared clock the minute hand's position is the minutes plus the
+  seconds, so the second hand cannot keep its phase while the minute hand
+  is turned. The first drag model assumed it could; the tests caught it,
+  and D-003 records the physical truth.
+- Appending an oval to a polygon path can cancel it under the non-zero
+  winding rule and leave a white notch at the tip. Fill the tip circle
+  separately; the icon mark and the Compose hands both do.
+- A long-lived effect (the frame loop) holds the callbacks it was born
+  with. Read them through `rememberUpdatedState`, and key each screenshot
+  scene, or every capture renders the first scene: all eighteen captures
+  once came out at 10:10.
 
 ## Map
 
@@ -125,14 +180,23 @@ workflows are the CI truth.
 core/                      pure Kotlin, zero Android imports:
   ClockFace.kt             every dial proportion, one source of truth
   ClockTime.kt             the laws: angles, the gear law, the quartz tick
+  ClockSetter.kt           the one mutable thing: the offset from live time
+  HandPick.kt              which hand a finger grabbed
+  ClockLayout.kt           how large the clock is on a window
+  DialPalette.kt           the chosen Schoolhouse palette (D-006)
   SpokenTime.kt            the words TalkBack says
-app/src/main/.../host/     ClockHost: the running time, the drag, the frame clock
-app/src/main/.../ui/       Compose: the dial, numerals, ticks, hands, the drag target
+app/src/main/.../host/     ClockHost: the wall clock and the offset
+app/src/main/.../ui/       Compose: ClockScreen (frame loop, drag, TalkBack),
+                           ClockDial, Numerals, Hands, ClockTheme
+app/src/androidTest/       ScreenshotTest.kt: the six store captures
+app/src/debug/             the debug-only bare host activity for the harness
 app/src/main/res/values/   strings.xml: every user-facing string
 app/src/main/res/font/     Baloo 2 (OFL), the numeral face
-tools/                     offline generators: design takes, launcher icon, store art
+tools/                     offline generators: takes, launcher icon, store art
 docs/                      privacy.html, OFL-Baloo2.txt, decisions.md
-play-store/                listing kit, screenshots per form factor, aab/
+play-store/                listing kit, screenshots per form factor; aab/
+                           holds only the build awaiting submission
+.github/workflows/         build.yml, screenshots.yml
 ```
 
 Where truth lives, by question:

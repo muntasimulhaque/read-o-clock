@@ -96,3 +96,14 @@ key only has to stay available to CI, and if it is ever lost it can be
 reset with Google. A dedicated keystore would only add one more secret to
 keep safe. The build probes a per-app keystore first, so a dedicated key
 can take over later without a code change.
+
+## D-008: The submitted listing says clock reading
+
+Date: 17 September 2026, at the 0.1 submission.
+
+The owner changed the store name and short description at submission to
+"Read-o-Clock: Clock Reading" (27 characters) and "Teach your child how to
+read the clock." (39 characters), choosing the phrase parents actually
+type over the friendlier first draft. The launcher name stays Read-o-Clock,
+and the submission guide carries the submitted text and its measured
+counts. Rejected: "Read-o-Clock: Teach Kids Time" (the first draft).
