@@ -179,6 +179,12 @@ from `docs/privacy.html` by GitHub Pages.
   with. Read them through `rememberUpdatedState`, and key each screenshot
   scene, or every capture renders the first scene: all eighteen captures
   once came out at 10:10.
+- Picking a hand from the down point alone makes a drag that starts
+  anywhere move the time. Only a touch that lands on a hand may grab it;
+  `HandPick.nearest` returns null otherwise.
+- A single synthesized click does not read as a quartz clock. Real ticks
+  are two impacts ten to thirteen milliseconds apart with a noise-rich,
+  broad spectrum; `:tools:makeTick` carries both.
 
 ## Map
 

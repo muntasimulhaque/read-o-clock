@@ -6,7 +6,9 @@ fields mangle markdown, and every character count below was measured with
 
 **Status: release 0.2 (versionCode 2) was submitted for review on
 17 September 2026. Release 0.1 (versionCode 1) was submitted earlier the
-same day.**
+same day. Main carries the next candidate: a tick rebuilt from
+measurements of real quartz clocks, and hands that move only under a
+finger that landed on them.**
 
 ## Store art
 
@@ -41,7 +43,7 @@ Read-o-Clock: Clock Reading
 Teach your child how to read the clock.
 ```
 
-**Full description** (Play allows 4000 characters; measured 1967).
+**Full description** (Play allows 4000 characters; measured 2070).
 Paragraphs are unwrapped on purpose: Play keeps the line breaks, so one
 line per paragraph pastes as a clean block.
 
@@ -55,7 +57,7 @@ A real clock, not a toy
 The hour hand sits exactly halfway between two numbers at half past, because that is where a real hour hand sits. There is no digital readout, no quiz screen, no score and no menu: just the clock, the way it hangs on the wall.
 
 Made for small hands
-A drag anywhere on the dial picks up the nearest hand, and the touch targets are huge. Nothing needs reading. Close the app and open it again and the clock is back on the real time, so the next lesson starts clean.
+Touch a hand and drag it; the whole length of the hand is a touch target, so a small finger does not have to be precise. The dial and the case themselves do nothing, just like a real clock. Nothing needs reading. Close the app and open it again and the clock is back on the real time, so the next lesson starts clean.
 
 A note for parents
 Children learn to read a clock by moving the hands themselves. Sit together, set the clock to breakfast time, then to bath time, and let your child move the hands back and forth. The clock is the whole lesson; there is nothing else to tap.

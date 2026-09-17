@@ -129,3 +129,29 @@ sound a real wall clock makes, so the rules now allow exactly one. This is
 the 0.2 release candidate. Rejected for the tick: a `ToneGenerator` beep
 (not a clock), a bundled recording (license and drift), and ticks while
 dragging (a buzz the setting moment does not need).
+
+## D-010: A held hand, and a tick measured from real clocks
+
+Date: 17 September 2026, after the 0.2 review.
+
+Two fixes the owner asked for after living with 0.2.
+
+The hand grab: until now any touch on the screen picked the nearest hand,
+so a drag that began on the dial, the case or off the clock pulled a hand
+around, which is not how a clock works. `HandPick.nearest` now returns
+nothing unless the touch lands on a hand (the baton's half width plus a
+finger's reach of 0.07 case radii), and the drag begins only then. Tests
+pin the empty dial, the corner of the screen and the space beyond a tip.
+
+The tick: 0.2's single synthesized click did not sound like the clock on
+the wall. Three public domain recordings of real clocks were measured: the
+PDsounds `Clock ticking.ogg` and `Alarm clock ticking.ogg` on Wikimedia
+Commons, and the Freesound preview of `Wall Clock Ticks, Quartz Clock` by
+Kinoton, used only as a measuring stick and never bundled. Every tick is
+two impacts about ten to thirteen milliseconds apart, the second nearly as
+loud as the first, and each impact is a noise-rich transient whose
+spectrum peaks between 200 Hz and 1 kHz and carries to about 5 kHz, not a
+tone with silent gaps between partials. `:tools:makeTick` now models both
+impacts, each with its own noise, detuned partial companions and a low
+body, at 44.1 kHz. This is the work for the 0.3 release candidate, waiting
+for the owner's word.

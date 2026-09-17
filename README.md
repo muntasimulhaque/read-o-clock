@@ -6,8 +6,10 @@ gear train follows. Native Android, paid once, fully offline: no ads, no
 trackers, no accounts, no network, no permissions. Open source under MIT.
 
 Status: release 0.2 (versionCode 2) was submitted for Play review on
-17 September 2026, with the smaller mark, tap-safe hands and the quartz
-tick. Release 0.1 (versionCode 1) was submitted earlier the same day.
+17 September 2026. Release 0.1 (versionCode 1) was submitted earlier the
+same day. Main now carries the next candidate: a tick rebuilt from
+measurements of real quartz clocks, and hands that move only under a
+finger that landed on them.
 
 <p align="center">
   <img src="play-store/screenshots/phone/02_one_oclock.png" width="170" alt="One o'clock: the hour hand on 1, the minute on 12">
@@ -37,10 +39,11 @@ onto it, so one o'clock can be exactly one o'clock with the second hand on
 its twelve. Once released, the whole clock runs.
 
 There is no menu, no settings, no digital readout, and nothing to tap but
-the hands: a drag anywhere on the dial picks up the nearest one, and a tap
-alone moves nothing. The only sound is the clock's own tick, one soft click
-with each step of the second hand. Closing and reopening the app returns
-the clock to the real time, so the next lesson starts clean.
+the hands: a finger lands on a hand and carries it around, and a touch
+anywhere else, however jittery, moves nothing. The only sound is the
+clock's own tick, one soft click with each step of the second hand.
+Closing and reopening the app returns the clock to the real time, so the
+next lesson starts clean.
 
 ## Private by construction
 
