@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipPath
+import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.lerp
 import io.github.muntasimulhaque.readoclock.core.ClockFace
 import kotlin.math.cos
@@ -42,22 +43,41 @@ fun ClockDial(
 }
 
 private fun DrawScope.drawCaseAndDial(center: Offset, radius: Float) {
-    // The floating shadow: the clock hangs on nothing, but it still sits in
-    // light, so a soft shadow gathers under it.
-    val shadowCenter = Offset(center.x, center.y + radius * 0.04f)
-    val shadowRadius = radius * 1.10f
+    // The clock hangs in light from above: a broad pool of shade under the
+    // case, and a tighter, darker pool right under the bottom rim. Neither
+    // reaches past 1.10 r, because on a short window the case nearly touches
+    // the screen and a hard clip would show at the edge. The takes renderer
+    // draws the same two pools, so the app and the store art stay one look.
+    val haloCenter = Offset(center.x, center.y + radius * 0.05f)
+    val haloRadius = radius * 1.05f
     drawCircle(
         brush = Brush.radialGradient(
             colorStops = arrayOf(
-                0.84f to Color(0f, 0f, 0f, 38f / 255f),
+                0.80f to Color(0f, 0f, 0f, 40f / 255f),
                 1f to Color.Transparent,
             ),
-            center = shadowCenter,
-            radius = shadowRadius,
+            center = haloCenter,
+            radius = haloRadius,
         ),
-        radius = shadowRadius,
-        center = shadowCenter,
+        radius = haloRadius,
+        center = haloCenter,
     )
+    val contactCenter = Offset(center.x, center.y + radius * 0.95f)
+    val contactRadius = radius * 0.90f
+    scale(scaleX = 1f, scaleY = 0.167f, pivot = contactCenter) {
+        drawCircle(
+            brush = Brush.radialGradient(
+                colorStops = arrayOf(
+                    0f to Color(0f, 0f, 0f, 34f / 255f),
+                    1f to Color.Transparent,
+                ),
+                center = contactCenter,
+                radius = contactRadius,
+            ),
+            radius = contactRadius,
+            center = contactCenter,
+        )
+    }
 
     // The case: a radial light from above, so the rim has a top and a bottom.
     drawCircle(

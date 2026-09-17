@@ -45,15 +45,32 @@ object DialRenderer {
     }
 
     private fun drawShadow(g: Graphics2D, cx: Double, cy: Double, r: Double) {
-        val shadowCenter = Point2D.Double(cx, cy + r * 0.04)
-        val radius = r * 1.10
+        // The clock hangs in light from above: a broad pool of shade under
+        // the case, and a tighter, darker pool right under the bottom rim.
+        // Neither may reach past 1.10 r, because on a short window the case
+        // nearly touches the screen and a hard clip would show at the edge.
+        val haloCenter = Point2D.Double(cx, cy + r * 0.05)
+        val haloRadius = r * 1.05
         g.paint = RadialGradientPaint(
-            shadowCenter,
-            radius.toFloat(),
-            floatArrayOf(0.84f, 1.0f),
-            arrayOf(Color(0, 0, 0, 38), Color(0, 0, 0, 0)),
+            haloCenter,
+            haloRadius.toFloat(),
+            floatArrayOf(0.80f, 1.0f),
+            arrayOf(Color(0, 0, 0, 40), Color(0, 0, 0, 0)),
         )
-        g.fill(Ellipse2D.Double(shadowCenter.x - radius, shadowCenter.y - radius, radius * 2, radius * 2))
+        g.fill(Ellipse2D.Double(haloCenter.x - haloRadius, haloCenter.y - haloRadius, haloRadius * 2, haloRadius * 2))
+
+        val previous = g.transform
+        g.translate(cx, cy + r * 0.95)
+        g.scale(1.0, 0.167)
+        val contactRadius = r * 0.90
+        g.paint = RadialGradientPaint(
+            Point2D.Double(0.0, 0.0),
+            contactRadius.toFloat(),
+            floatArrayOf(0.0f, 1.0f),
+            arrayOf(Color(0, 0, 0, 34), Color(0, 0, 0, 0)),
+        )
+        g.fill(Ellipse2D.Double(-contactRadius, -contactRadius, contactRadius * 2, contactRadius * 2))
+        g.transform = previous
     }
 
     private fun drawCase(g: Graphics2D, cx: Double, cy: Double, r: Double, skin: Skin) {
