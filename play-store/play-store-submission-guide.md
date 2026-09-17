@@ -4,11 +4,11 @@ The owner's copy-paste sheet. Plain text throughout, because Play Console
 fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
-**Status: release 0.2 (versionCode 2) was submitted for review on
-17 September 2026. Release 0.1 (versionCode 1) was submitted earlier the
-same day. Main carries the next candidate: a tick rebuilt from
-measurements of real quartz clocks, and hands that move only under a
-finger that landed on them.**
+**Status: release 0.3 (versionCode 3) is the current release candidate,
+approved by the owner on 17 September 2026: the measured quartz tick and
+hands that move only under a finger that landed on them. Release 0.2
+(versionCode 2) and release 0.1 (versionCode 1) were submitted for review
+earlier the same day.**
 
 ## Store art
 
@@ -94,6 +94,12 @@ All answers are **No**: violence, sexuality, language, controlled
 substances, gambling, user interaction, sharing location, digital
 purchases. The expected outcome is the lowest rating, suitable for ages 3
 and up. The app shows no ads and no external links.
+
+## Release notes for 0.3 (Play allows 500 characters; measured 326)
+
+```
+The second hand now ticks like a real wall clock: two quick snaps instead of one soft click, rebuilt from recordings of real quartz clocks. And a hand moves only when a finger lands on it and drags; touching the dial or the case moves nothing, the way a real clock behaves. Still one clock, no permissions, no network, no ads.
+```
 
 ## Release notes for 0.2 (Play allows 500 characters; measured 271)
 

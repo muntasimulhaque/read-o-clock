@@ -153,5 +153,5 @@ loud as the first, and each impact is a noise-rich transient whose
 spectrum peaks between 200 Hz and 1 kHz and carries to about 5 kHz, not a
 tone with silent gaps between partials. `:tools:makeTick` now models both
 impacts, each with its own noise, detuned partial companions and a low
-body, at 44.1 kHz. This is the work for the 0.3 release candidate, waiting
-for the owner's word.
+body, at 44.1 kHz. The owner approved the 0.3 release candidate
+(versionCode 3) the same day.
