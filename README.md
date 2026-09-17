@@ -5,8 +5,15 @@ the time. The hands are the teaching tool: drag either one and the clock
 keeps running. Native Android, paid once, fully offline: no ads, no
 trackers, no accounts, no network, no permissions. Open source under MIT.
 
-Status: in development. The rules, the app and the launcher icon are in
-place and green; the store kit and the first release follow.
+Status: in development. The rules, the app, the icon and the store kit are
+in place and green; the first signed release follows once the keystore
+exists.
+
+<p align="center">
+  <img src="play-store/screenshots/phone/02_one_oclock.png" width="170" alt="One o'clock: the hour hand on 1, the minute on 12">
+  <img src="play-store/screenshots/phone/03_half_past_three.png" width="170" alt="Half past three: the hour hand exactly between 3 and 4">
+  <img src="play-store/screenshots/phone/01_hero_ten_past_ten.png" width="170" alt="Ten past ten, the open-hands look">
+</p>
 
 - **Play Store package:** `io.github.muntasimulhaque.readoclock`
 - **License:** MIT
