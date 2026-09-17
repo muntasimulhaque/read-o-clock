@@ -1,6 +1,7 @@
 package io.github.muntasimulhaque.readoclock.core
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Test
 
 class HandPickTest {
@@ -23,9 +24,25 @@ class HandPickTest {
     }
 
     @Test
-    fun aTouchBeyondATipStillCountsAsThatHand() {
-        // Well beyond the hour hand's tip, still along its direction.
-        assertEquals(ClockHand.Hour, HandPick.nearest(0.0, -1.0, hourAngle = 0.0, minuteAngle = 180.0))
+    fun aTouchWithinAFingerOfTheHandPicksIt() {
+        // A finger pad beside the minute hand, not exactly on the baton.
+        assertEquals(ClockHand.Minute, HandPick.nearest(0.6, 0.05, hourAngle = 180.0, minuteAngle = 90.0))
+    }
+
+    @Test
+    fun aTouchOnTheDialAwayFromBothHandsPicksNothing() {
+        assertNull(HandPick.nearest(0.6, 0.0, hourAngle = 0.0, minuteAngle = 180.0))
+    }
+
+    @Test
+    fun aTouchBeyondAHandsTipPicksNothing() {
+        assertNull(HandPick.nearest(0.0, -1.0, hourAngle = 0.0, minuteAngle = 180.0))
+    }
+
+    @Test
+    fun theGrabRadiusCoversTheBatonAndAFinger() {
+        assertEquals(0.083, HandPick.grabRadius(ClockHand.Minute), 1e-9)
+        assertEquals(0.090, HandPick.grabRadius(ClockHand.Hour), 1e-9)
     }
 
     @Test

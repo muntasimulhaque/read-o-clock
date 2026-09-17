@@ -144,16 +144,19 @@ fun ClockScreen(
                 .pointerInput(radius) {
                     awaitEachGesture {
                         val down = awaitFirstDown()
+                        // The finger must land on a hand, as on a real
+                        // clock: a touch on the dial, on the case, or off
+                        // the clock holds nothing and is passed on.
                         val hand = HandPick.nearest(
                             pointX = (down.position.x - center.x).toDouble() / radius,
                             pointY = (down.position.y - center.y).toDouble() / radius,
                             hourAngle = ClockTime.hourAngleDegrees(currentReading()),
                             minuteAngle = ClockTime.minuteAngleDegrees(currentReading()),
-                        )
-                        // A poke is not a drag: the hand only moves once the
-                        // finger has crossed touch slop, so a tap, however
-                        // jittery, never jumps a hand across the dial. The
-                        // hand was picked at the down point.
+                        ) ?: return@awaitEachGesture
+                        // A poke is not a drag either: the hand only moves
+                        // once the finger has crossed touch slop, so a tap,
+                        // however jittery, never jumps a hand across the
+                        // dial. The hand was picked at the down point.
                         val dragStart = awaitTouchSlopOrCancellation(down.id) { change, _ ->
                             change.consume()
                         } ?: return@awaitEachGesture
