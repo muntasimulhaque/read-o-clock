@@ -155,3 +155,37 @@ tone with silent gaps between partials. `:tools:makeTick` now models both
 impacts, each with its own noise, detuned partial companions and a low
 body, at 44.1 kHz. The owner approved the 0.3 release candidate
 (versionCode 3) and submitted it to Play the same day.
+
+## D-011: The tick as one knock, and the shadow under the case
+
+Date: 17 September 2026, after the 0.3 review.
+
+Two changes the owner asked for after living with 0.3.
+
+The tick: the owner still did not hear the clock on the wall in 0.3's
+sound. Its two impacts sat ten and a half milliseconds apart and nearly
+equal in loudness, which reads as a synthetic double click, and its case
+modes died in three to six milliseconds, so the tick had no body. The
+second impact D-010 measured was probably the room answering the first
+hit rather than the movement itself; baked in at full loudness it turns a
+knock into a flam. `:tools:makeTick` now lands one knock at full
+loudness, a duller catch at half loudness ten and a half milliseconds
+later, and a weak rattle at eighteen and a half, over a case bank that
+rings from sixteen milliseconds at 300 Hz down to two at 6 kHz, with a
+low body under it: fifty two milliseconds in all, ending in a ten
+millisecond tail. Rejected: keeping the equal double impact (the 0.3
+sound), a click with no case ring (no body), and a recorded sample
+(license and drift).
+
+The shadow: the old render drew a ring of black at 38/255 under the case
+that all but vanished against the warm field, and the owner said the
+clock had no shadow at all. The dial now draws two pools, in the app and
+in the takes renderer from the same numbers: a broad halo at 40/255 that
+reaches 1.10 case radii, and a contact pool at 34/255 whose dark gathers
+under the bottom rim. Nothing reaches past 1.10 case radii, because on a
+short window the case nearly touches the screen and a hard clip would
+show at the edge; on the 10 inch landscape capture the shade dies before
+the screen does. The feature graphic and all eighteen store captures
+were regenerated from the same renderers. The owner picks the final
+sound from `C:\tmp\ticklab\listen\` before the next release candidate
+bumps `versionCode`.
