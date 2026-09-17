@@ -4,9 +4,9 @@ The owner's copy-paste sheet. Plain text throughout, because Play Console
 fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
-**Status: release 0.2 (versionCode 2) is the current candidate, built by
-CI at the latest-build release. Release 0.1 (versionCode 1) was submitted
-for review on 17 September 2026.**
+**Status: release 0.2 (versionCode 2) was submitted for review on
+17 September 2026. Release 0.1 (versionCode 1) was submitted earlier the
+same day.**
 
 ## Store art
 

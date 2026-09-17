@@ -5,9 +5,9 @@ the time. The hands are the teaching tool: drag either one and the whole
 gear train follows. Native Android, paid once, fully offline: no ads, no
 trackers, no accounts, no network, no permissions. Open source under MIT.
 
-Status: release 0.2 (versionCode 2) is the current release candidate,
-built by CI at the latest-build release. Release 0.1 (versionCode 1) was
-submitted for Play review on 17 September 2026.
+Status: release 0.2 (versionCode 2) was submitted for Play review on
+17 September 2026, with the smaller mark, tap-safe hands and the quartz
+tick. Release 0.1 (versionCode 1) was submitted earlier the same day.
 
 <p align="center">
   <img src="play-store/screenshots/phone/02_one_oclock.png" width="170" alt="One o'clock: the hour hand on 1, the minute on 12">
