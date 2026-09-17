@@ -5,10 +5,10 @@ the time. The hands are the teaching tool: drag either one and the whole
 gear train follows. Native Android, paid once, fully offline: no ads, no
 trackers, no accounts, no network, no permissions. Open source under MIT.
 
-Status: release 0.3 (versionCode 3) is the current release candidate,
-with the measured quartz tick and hands that move only under a finger
-that landed on them. Releases 0.2 and 0.1 were submitted for Play review
-on 17 September 2026.
+Status: release 0.3 (versionCode 3), with the measured quartz tick and
+hands that move only under a finger that landed on them, was submitted
+for Play review on 17 September 2026. Releases 0.2 and 0.1 were submitted
+earlier the same day.
 
 <p align="center">
   <img src="play-store/screenshots/phone/02_one_oclock.png" width="170" alt="One o'clock: the hour hand on 1, the minute on 12">

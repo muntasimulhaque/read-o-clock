@@ -154,4 +154,4 @@ spectrum peaks between 200 Hz and 1 kHz and carries to about 5 kHz, not a
 tone with silent gaps between partials. `:tools:makeTick` now models both
 impacts, each with its own noise, detuned partial companions and a low
 body, at 44.1 kHz. The owner approved the 0.3 release candidate
-(versionCode 3) the same day.
+(versionCode 3) and submitted it to Play the same day.

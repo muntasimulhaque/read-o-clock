@@ -4,11 +4,10 @@ The owner's copy-paste sheet. Plain text throughout, because Play Console
 fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
-**Status: release 0.3 (versionCode 3) is the current release candidate,
-approved by the owner on 17 September 2026: the measured quartz tick and
-hands that move only under a finger that landed on them. Release 0.2
-(versionCode 2) and release 0.1 (versionCode 1) were submitted for review
-earlier the same day.**
+**Status: release 0.3 (versionCode 3), with the measured quartz tick and
+hands that move only under a finger that landed on them, was submitted
+for review on 17 September 2026. Release 0.2 (versionCode 2) and release
+0.1 (versionCode 1) were submitted earlier the same day.**
 
 ## Store art
 
