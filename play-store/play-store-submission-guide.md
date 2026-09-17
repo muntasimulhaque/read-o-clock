@@ -4,10 +4,10 @@ The owner's copy-paste sheet. Plain text throughout, because Play Console
 fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
-**Status: release 0.3 (versionCode 3), with the measured quartz tick and
-hands that move only under a finger that landed on them, was submitted
-for review on 17 September 2026. Release 0.2 (versionCode 2) and release
-0.1 (versionCode 1) were submitted earlier the same day.**
+**Status: release 0.4 (versionCode 4), with the one-knock quartz tick and
+the shadow under the case, awaits Play submission. Release 0.3
+(versionCode 3), 0.2 (versionCode 2) and 0.1 (versionCode 1) were
+submitted on 17 September 2026.**
 
 ## Store art
 
@@ -93,6 +93,12 @@ All answers are **No**: violence, sexuality, language, controlled
 substances, gambling, user interaction, sharing location, digital
 purchases. The expected outcome is the lowest rating, suitable for ages 3
 and up. The app shows no ads and no external links.
+
+## Release notes for 0.4 (Play allows 500 characters; measured 284)
+
+```
+The second hand's tick now sounds like the clock on the wall: one knock with a small catch behind it, not a double click. The clock also casts a soft shadow, so it sits on the wall instead of floating on it. Still one clock on one screen: no menu, no permissions, no network, no ads.
+```
 
 ## Release notes for 0.3 (Play allows 500 characters; measured 326)
 

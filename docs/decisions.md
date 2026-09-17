@@ -186,6 +186,6 @@ under the bottom rim. Nothing reaches past 1.10 case radii, because on a
 short window the case nearly touches the screen and a hard clip would
 show at the edge; on the 10 inch landscape capture the shade dies before
 the screen does. The feature graphic and all eighteen store captures
-were regenerated from the same renderers. The owner picks the final
-sound from `C:\tmp\ticklab\listen\` before the next release candidate
-bumps `versionCode`.
+were regenerated from the same renderers. The owner approved both for
+the 0.4 release candidate (versionCode 4) and asked for the Play release
+the same day.
