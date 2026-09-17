@@ -5,9 +5,8 @@ the time. The hands are the teaching tool: drag either one and the clock
 keeps running. Native Android, paid once, fully offline: no ads, no
 trackers, no accounts, no network, no permissions. Open source under MIT.
 
-Status: in development. The rules, the app, the icon and the store kit are
-in place and green; the first signed release follows once the keystore
-exists.
+Status: release 0.1 (versionCode 1) was submitted for Play review on
+17 September 2026.
 
 <p align="center">
   <img src="play-store/screenshots/phone/02_one_oclock.png" width="170" alt="One o'clock: the hour hand on 1, the minute on 12">

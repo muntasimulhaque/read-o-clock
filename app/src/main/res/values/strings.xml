@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- The launcher name. The Play listing title is
-         "Read-o-Clock: Teach Kids Time" (29 of Play's 30 characters) and
+    <!-- The launcher name. The submitted Play listing title is
+         "Read-o-Clock: Clock Reading" (27 of Play's 30 characters) and
          lives in the play-store kit, kept in step by hand. -->
     <string name="app_name">Read-o-Clock</string>
 
