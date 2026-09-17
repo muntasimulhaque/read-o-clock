@@ -99,18 +99,20 @@ First release. One real wall clock, nothing else. Drag the hands with a finger a
 
 ## Upload kit
 
-- **AAB**: built by CI and published to the `latest-build` release; pull it
-  into `play-store/aab/` with
-  `gh release download latest-build -R muntasimulhaque/read-o-clock -p "*.aab" -D play-store/aab`.
-  Delete it after submitting, so a stale build can never be uploaded twice.
 - **Screenshots**: six scenes per form factor, captured by CI
   (`screenshots.yml`) and copied into `play-store/screenshots/phone`,
   `tablet7` and `tablet10`. Upload each folder to the matching form factor
   in the Console.
-- **Signing**: the upload keystore for this app lives in the owner's vault
-  at `Google Play Signing Key/Read-o-Clock/`, never in the repo. Until the
-  keystore exists and the four GitHub secrets (`KEYSTORE_BASE64`,
-  `KEYSTORE_PASSWORD`, `KEY_ALIAS`, `KEY_PASSWORD`) are set, CI builds an
-  unsigned release and does not publish it. The first release cannot be
-  uploaded until the keystore is created, and if it is lost the app can
-  never be updated again.
+
+- **AAB**: built by CI and published to the `latest-build` release; pull it
+  into `play-store/aab/` with
+  `gh release download latest-build -R muntasimulhaque/read-o-clock -p "*.aab" -D play-store/aab`.
+  Delete it after submitting, so a stale build can never be uploaded twice.
+- **Signing**: Read-o-Clock signs with the shared upload keystore in the
+  owner's vault (`Google Play Signing Key/signing.keystore`, the same upload
+  key the other apps use; decision D-007), never in the repo. Its base64
+  twin and the passwords live in this repository's `KEYSTORE_BASE64`,
+  `KEYSTORE_PASSWORD`, `KEY_ALIAS` and `KEY_PASSWORD` GitHub secrets, and CI
+  publishes the signed AAB to the `latest-build` release. If the keystore is
+  lost the shared upload key has to be reset with Google, so the vault stays
+  backed up in a second place.

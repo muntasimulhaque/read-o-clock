@@ -84,3 +84,15 @@ dial, deep blue numerals, coral second, wood case). The owner picks from
 Chosen: Schoolhouse enamel. Its palette is `core/DialPalette.kt`, the one
 source the app theme and the offline generators both read, so the takes,
 the app, the launcher icon and the store art can never drift apart.
+
+## D-007: Signing uses the shared upload keystore
+
+Date: the first session.
+
+The app signs with the shared upload keystore in the owner's vault, the
+same key the other apps use, rather than spending a day creating and
+recording a new one. Play App Signing holds the app signing key; the upload
+key only has to stay available to CI, and if it is ever lost it can be
+reset with Google. A dedicated keystore would only add one more secret to
+keep safe. The build probes a per-app keystore first, so a dedicated key
+can take over later without a code change.

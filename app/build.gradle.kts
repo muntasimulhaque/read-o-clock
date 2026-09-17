@@ -8,12 +8,15 @@ plugins {
 
 // The upload keystore's path and credentials live in keystore.properties in
 // the owner's vault, outside every repo, so no credential ever enters the
-// repository. CI instead provides the keystore through KEYSTORE_FILE and the
-// three secrets. When neither is present (a fresh clone) the release build
-// degrades to unsigned rather than failing.
+// repository. Read-o-Clock uses the shared upload keystore already used by
+// the other apps (docs/decisions.md D-007); a per-app keystore would win if
+// one is ever created. CI instead provides the keystore through
+// KEYSTORE_FILE and the three secrets. When neither is present (a fresh
+// clone) the release build degrades to unsigned rather than failing.
 val keystoreLayouts = listOf(
     "BSCPLC/DM (Development)/Personal Docs/Pers/My Apps/Google Play Signing Key/Read-o-Clock/keystore.properties",
     "BSCPLC/DM (Development)/Personal Docs/Pers/Google Play Signing Key/Read-o-Clock/keystore.properties",
+    "BSCPLC/DM (Development)/Personal Docs/Pers/My Apps/Google Play Signing Key/keystore.properties",
 )
 val keystoreFile = keystoreLayouts
     .map { file("E:/GDrive/$it") }
