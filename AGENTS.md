@@ -32,12 +32,15 @@ as a dead letter.
 1. **The realism law.** One time value drives all three hands; the hands
    are views of it, never independent state. Setting a hand solves for
    the time under the finger and the others follow through the real gear
-   ratios: dragging the minute hand carries the hour, dragging the hour
-   hand spins the minute, and crossing 12 rolls the hour. The second hand
-   keeps its own phase through any setting. Hour and minute hands move
-   continuously; the second hand takes a quartz step once per second with
-   a visible overshoot and settle, because the hand has inertia. Tests in
-   `core/` pin every one of these.
+   ratios, the second hand included, because the minute hand's position
+   is the minutes plus the seconds. Dragging the minute hand carries the
+   hour, dragging the hour hand spins the minute, and crossing 12 rolls
+   the hour. Hour and minute hands move continuously; the second hand
+   takes a quartz step once per second with a visible overshoot and
+   settle, because the hand has inertia. A released hand settles onto a
+   whole minute when it is close, so one o'clock can be exactly one
+   o'clock with the second hand on its twelve. Once released, the whole
+   clock runs. Tests in `core/` pin every one of these.
 2. **No network, no ads, no trackers, zero permissions.** No `INTERNET`,
    no third-party SDKs, no analytics. This underpins the Data-safety
    declaration and the Families listing. A new permission needs the
@@ -91,6 +94,7 @@ as a dead letter.
   mirrors it.
 - The version walk: `versionCode` only ever increases and is never
   reused; `versionName` is `versionCode` divided by ten, one decimal.
+  The first release is 0.1, then 0.2 through 0.9, then 1.0, 1.1 and on.
   The live numbers are in `app/build.gradle.kts`.
 - `targetSdk` moves only together with an AGP that supports it.
 - The signing keystore lives outside the repo (the owner's vault), with
@@ -103,8 +107,12 @@ as a dead letter.
 
 ```sh
 export JAVA_HOME="/c/Program Files/Android/Android Studio/jbr"   # not on PATH
-./gradlew :core:test                                             # the rules
-./gradlew :tools:makeTakes                                       # design takes into build/takes
+./gradlew :core:test                                     # the rules
+./gradlew :app:testReleaseUnitTest :app:lintRelease      # app tests and full lint
+./gradlew :app:assembleDebug                             # installable debug build
+./gradlew :app:assembleRelease                           # R8 release, signed when the keystore is present
+./gradlew :tools:makeTakes                               # design takes into build/takes
+./gradlew :tools:makeIcons :tools:checkIcons             # regenerate, then pin the launcher icon
 ```
 
 `app/src/androidTest` holds the screenshot harness; captures are

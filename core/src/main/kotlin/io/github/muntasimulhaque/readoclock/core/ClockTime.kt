@@ -12,7 +12,10 @@ import kotlin.math.round
  * hands are not independent state, they are views of that one value. This is
  * the gear law. Setting a hand solves for the time that would put that hand
  * under the finger, and the other hands then follow the way real gears make
- * them follow.
+ * them follow. The second hand is part of the same gear train, so turning
+ * the hands turns the seconds too: on a real clock there is no way to hold
+ * the minute hand on the twelve while the second hand sits at forty five,
+ * because the minute hand's position is the minutes plus the seconds.
  *
  * The quartz tick: a real quartz movement advances the second hand once per
  * second, with a visible overshoot and settle because the hand has inertia.
@@ -74,57 +77,40 @@ object ClockTime {
         normalize(Math.toDegrees(atan2(x - centerX, centerY - y)))
 
     /**
-     * The time that puts the minute hand under the finger, keeping the second
-     * hand's phase, because setting a clock never touches the second hand. The
-     * hour follows, and crossing 12 rolls the hour, which is the gear law.
+     * The time that puts the minute hand under the finger. The minute hand's
+     * angle is the whole time within the hour, seconds included, so solving
+     * for it solves for the whole gear train; the 12 hour ambiguity resolves
+     * to whichever side of the day was nearer.
      */
     fun timeFromMinuteAngle(currentSeconds: Double, angle: Double): Double {
-        val minuteOfHour = normalize(angle) / 6.0
-        val secondPhase = normalizeSeconds(currentSeconds % 60.0)
-        val base = minuteOfHour * 60.0 + secondPhase
-        val hours = round((currentSeconds - base) / 3600.0)
-        return base + hours * 3600.0
+        val secondsWithinHour = normalize(angle) * 10.0
+        val hour = round((currentSeconds - secondsWithinHour) / 3600.0)
+        return secondsWithinHour + hour * 3600.0
     }
 
     /**
-     * The time that puts the hour hand under the finger. Because the hour hand
-     * carries the minutes inside its angle, the minute hand follows it, and
-     * the 12 hour ambiguity resolves to whichever side of noon was nearer.
+     * The time that puts the hour hand under the finger. The hour hand's
+     * angle carries the minutes and seconds inside it, so the other hands
+     * follow, and the 12 hour ambiguity resolves to whichever half of the
+     * day was nearer.
      */
     fun timeFromHourAngle(currentSeconds: Double, angle: Double): Double {
-        val hours = normalize(angle) / 30.0
-        val wholeHours = floor(hours)
-        val minutes = (hours - wholeHours) * 60.0
-        val secondPhase = normalizeSeconds(currentSeconds % 60.0)
-        val near = wholeHours * 3600.0 + minutes * 60.0 + secondPhase
-        val far = near + 43200.0
-        return if (distanceAcrossDay(near, currentSeconds) <=
-            distanceAcrossDay(far, currentSeconds)
-        ) near else far
+        val secondsWithinHalfDay = normalize(angle) * 120.0
+        val half = round((currentSeconds - secondsWithinHalfDay) / 43200.0)
+        return secondsWithinHalfDay + half * 43200.0
     }
 
     /**
-     * The light magnetic settle: when the minute hand is released close to a
-     * whole minute, it eases onto it, so one o'clock can be exactly one
-     * o'clock. Anywhere else the time stays where the finger left it.
+     * The light magnetic settle: when the hands are released close to a whole
+     * minute, they ease onto it, so one o'clock can be exactly one o'clock
+     * with the second hand on its twelve too. Anywhere else the time stays
+     * where the finger left it.
      */
     fun snapMinute(secondsOfDay: Double, windowDegrees: Double = MinuteSnapWindowDegrees): Double {
-        val minuteOfHour = (((secondsOfDay % 3600.0) + 3600.0) % 3600.0) / 60.0
-        val nearest = round(minuteOfHour)
-        val offDegrees = (minuteOfHour - nearest) * 6.0
-        return if (abs(offDegrees) <= windowDegrees + 1e-9) {
-            secondsOfDay + (nearest - minuteOfHour) * 60.0
-        } else {
-            secondsOfDay
-        }
+        val nearest = round(secondsOfDay / 60.0) * 60.0
+        val offDegrees = (secondsOfDay - nearest) / 10.0
+        return if (abs(offDegrees) <= windowDegrees + 1e-9) nearest else secondsOfDay
     }
 
     private fun normalize(degrees: Double): Double = ((degrees % 360.0) + 360.0) % 360.0
-
-    private fun normalizeSeconds(seconds: Double): Double = ((seconds % 60.0) + 60.0) % 60.0
-
-    private fun distanceAcrossDay(a: Double, b: Double): Double {
-        val raw = abs(a - b) % SecondsPerDay
-        return minOf(raw, SecondsPerDay - raw)
-    }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The launcher name. The Play listing title is
+         "Read-o-Clock: Teach Kids Time" (29 of Play's 30 characters) and
+         lives in the play-store kit, kept in step by hand. -->
+    <string name="app_name">Read-o-Clock</string>
+
+    <!-- The dial's one spoken name, for TalkBack. -->
+    <string name="clock">Clock</string>
+    <string name="clock_state">It is %1$s</string>
+
+    <!-- The dial's four accessibility actions. -->
+    <string name="move_minute_forward">Move the hands one minute forward</string>
+    <string name="move_minute_back">Move the hands one minute back</string>
+    <string name="move_hour_forward">Move the hands one hour forward</string>
+    <string name="move_hour_back">Move the hands one hour back</string>
+</resources>

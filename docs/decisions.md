@@ -32,21 +32,24 @@ Date: the first session.
 
 The hands are not independent state. One time value drives all three, and
 setting a hand solves for the time under the finger; the other hands then
-follow the real gear ratios. This is what makes the app feel like holding
-a real clock instead of a toy: at 1:30 the hour hand sits exactly between
-1 and 2, crossing 12 while dragging rolls the hour, and the second hand
-keeps its phase through any setting, because a wall clock's second hand
-does not stop while you set the time.
+follow the real gear ratios, the second hand included: the minute hand's
+position is the minutes plus the seconds, so turning the hands turns the
+seconds too. This is what makes the app feel like holding a real clock
+instead of a toy: at 1:30 the hour hand sits exactly between 1 and 2,
+crossing 12 while dragging rolls the hour, and setting the hands to twelve
+lands an exact hour with the second hand on its twelve.
 
 The second hand takes a quartz step once per second with an overshoot and
 settle (ease-out-back, about 0.4 degrees of overshoot); the hour and
 minute hands move continuously. Rejected: a sweeping second hand (not
 this clock), a perfectly still hand until the next tick (a real quartz
-hand visibly bounces), and independent hands (not a clock).
+hand visibly bounces), independent hands (not a clock), and a second hand
+that keeps its phase while the minute hand is turned (physically
+impossible on a geared clock).
 
-The minute hand has a weak magnetic settle of 2.4 degrees, so exact
-minutes are easy to land on; the hour hand always sits proportionally,
-never parked on a numeral.
+The hands have a weak magnetic settle of 2.4 degrees, so a released minute
+hand eases onto a whole minute, second hand and all, when it is close;
+the hour hand always sits proportionally, never parked on a numeral.
 
 ## D-004: The clock is the whole app
 
@@ -77,3 +80,7 @@ uses: Schoolhouse enamel (cream dial, ink numerals, red second, dark
 case), Porcelain kitchen (white dial, steel case), Sunrise (warm ivory
 dial, deep blue numerals, coral second, wood case). The owner picks from
 `build/takes`; the winner is recorded here and encoded in the app theme.
+
+Chosen: Schoolhouse enamel. Its palette is `core/DialPalette.kt`, the one
+source the app theme and the offline generators both read, so the takes,
+the app, the launcher icon and the store art can never drift apart.

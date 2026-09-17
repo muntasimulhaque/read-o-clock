@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The chosen dial's field, the app's resting ground. Kept in step with
+         core DialPalette (Schoolhouse enamel, docs/decisions.md D-006). -->
+    <color name="field">#E0DBD0</color>
+
+    <!-- The adaptive icon's background layer: the clock's case color. -->
+    <color name="ic_launcher_background">#322D27</color>
+</resources>

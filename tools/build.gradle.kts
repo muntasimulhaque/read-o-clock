@@ -30,3 +30,19 @@ tasks.register<JavaExec>("makeTakes") {
     mainClass = "io.github.muntasimulhaque.readoclock.tools.MakeTakesKt"
     args = listOf(rootDir.absolutePath)
 }
+
+tasks.register<JavaExec>("makeIcons") {
+    group = "tools"
+    description = "Regenerate the launcher icon set in app/src/main/res."
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "io.github.muntasimulhaque.readoclock.tools.MakeIconsKt"
+    args = listOf(rootDir.absolutePath)
+}
+
+tasks.register<JavaExec>("checkIcons") {
+    group = "tools"
+    description = "Verify the committed launcher icons match a fresh regeneration."
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "io.github.muntasimulhaque.readoclock.tools.MakeIconsKt"
+    args = listOf(rootDir.absolutePath, "--check")
+}

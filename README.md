@@ -5,8 +5,8 @@ the time. The hands are the teaching tool: drag either one and the clock
 keeps running. Native Android, paid once, fully offline: no ads, no
 trackers, no accounts, no network, no permissions. Open source under MIT.
 
-Status: in development. The rules module and the design takes are in place;
-the app, the store kit and the first build follow.
+Status: in development. The rules, the app and the launcher icon are in
+place and green; the store kit and the first release follow.
 
 - **Play Store package:** `io.github.muntasimulhaque.readoclock`
 - **License:** MIT
@@ -53,4 +53,11 @@ Design takes (scratch, never committed):
 
 ```
 ./gradlew :tools:makeTakes    # renders build/takes/*.png for review
+```
+
+Launcher icon (generated from code, committed, pinned):
+
+```
+./gradlew :tools:makeIcons    # regenerate after a deliberate design change
+./gradlew :tools:checkIcons   # fails if the committed bytes drift
 ```

@@ -1,6 +1,7 @@
 package io.github.muntasimulhaque.readoclock.tools
 
 import java.awt.Color
+import io.github.muntasimulhaque.readoclock.core.DialPalette
 
 /**
  * One design take: the palette of a dial. Everything else (geometry, hands,
@@ -25,15 +26,15 @@ object Skins {
         Skin(
             id = "a-schoolhouse",
             name = "Schoolhouse enamel",
-            field = Color(0xFFE0DBD0.toInt()),
-            dial = Color(0xFFF7F2E6.toInt()),
-            dialEdge = Color(0xFFE6DECB.toInt()),
-            numerals = Color(0xFF26282C.toInt()),
-            ticks = Color(0xFF2E3136.toInt()),
-            hands = Color(0xFF202329.toInt()),
-            secondHand = Color(0xFFC6402F.toInt()),
-            caseFill = Color(0xFF322D27.toInt()),
-            caseEdge = Color(0xFF171410.toInt()),
+            field = Color(DialPalette.field.toInt()),
+            dial = Color(DialPalette.dial.toInt()),
+            dialEdge = Color(DialPalette.dialEdge.toInt()),
+            numerals = Color(DialPalette.numerals.toInt()),
+            ticks = Color(DialPalette.ticks.toInt()),
+            hands = Color(DialPalette.hands.toInt()),
+            secondHand = Color(DialPalette.secondHand.toInt()),
+            caseFill = Color(DialPalette.caseFill.toInt()),
+            caseEdge = Color(DialPalette.caseEdge.toInt()),
         ),
         Skin(
             id = "b-porcelain",

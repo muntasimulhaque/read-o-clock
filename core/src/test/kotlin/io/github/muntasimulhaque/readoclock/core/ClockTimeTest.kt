@@ -41,11 +41,12 @@ class ClockTimeTest {
     }
 
     @Test
-    fun settingTheMinuteHandKeepsTheSecondHandPhase() {
-        val current = 43_170.0 // 11:59:30
-        val set = ClockTime.timeFromMinuteAngle(current, 0.0)
-        assertEquals(43_230.0, set, 1e-9) // 12:00:30
-        assertEquals(current % 60.0, set % 60.0, 1e-9)
+    fun settingTheMinuteHandSolvesTheWholeGearTrain() {
+        // Pointing the minute hand at the twelve lands an exact hour, with
+        // the second hand on its twelve too: the hands are one gear train.
+        val set = ClockTime.timeFromMinuteAngle(43_170.0, 0.0)
+        assertEquals(43_200.0, set, 1e-9) // 12:00:00
+        assertEquals(0.0, set % 60.0, 1e-9)
     }
 
     @Test
@@ -54,8 +55,8 @@ class ClockTimeTest {
         assertEquals(3600.0, ClockTime.timeFromMinuteAngle(3600.0, 0.0), 1e-9)
         // Five past one follows the gear.
         assertEquals(3900.0, ClockTime.timeFromMinuteAngle(3600.0, 30.0), 1e-9)
-        // Pointing the minute hand at 12 from 11:59:30 rolls to 12:00:30.
-        assertEquals(43_230.0, ClockTime.timeFromMinuteAngle(43_170.0, 0.0), 1e-9)
+        // Pointing the minute hand at 12 from 11:59:30 rolls to 12:00:00.
+        assertEquals(43_200.0, ClockTime.timeFromMinuteAngle(43_170.0, 0.0), 1e-9)
     }
 
     @Test
@@ -81,8 +82,8 @@ class ClockTimeTest {
         assertEquals(3720.0, ClockTime.snapMinute(3696.0), 1e-9) // 1:01:36 settles forward
         assertEquals(3720.0, ClockTime.snapMinute(3708.0), 1e-9) // 1:01:48 settles forward
         assertEquals(3630.0, ClockTime.snapMinute(3630.0), 1e-9) // half a minute stays put
-        // A minute hand on 59.8 settles to the next hour.
-        assertEquals(4320.0, ClockTime.snapMinute(4308.0), 1e-9) // 1:11:48 to 1:12:00
+        // A whole minute settles to itself.
+        assertEquals(4320.0, ClockTime.snapMinute(4320.0), 1e-9)
     }
 
     @Test

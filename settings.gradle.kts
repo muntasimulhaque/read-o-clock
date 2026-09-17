@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "read-o-clock"
 include(":core")
 include(":tools")
+include(":app")
