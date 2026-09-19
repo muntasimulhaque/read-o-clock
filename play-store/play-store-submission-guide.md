@@ -4,12 +4,13 @@ The owner's copy-paste sheet. Plain text throughout, because Play Console
 fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
-**Status: release 0.5 (versionCode 5) is pushed and building; it awaits
-submission. Its notes are below. Release 0.4 (versionCode 4), with the
-one-knock quartz tick and the shadow under the case, was submitted for
-review on 17 September 2026. Releases 0.3 (versionCode 3), 0.2
-(versionCode 2) and 0.1 (versionCode 1) were submitted earlier the same
-day.**
+**Status: release 0.5 (versionCode 5), with the measured quartz tick and
+the fix for a tick a stalled frame could swallow, was submitted for
+review on 19 September 2026; its notes are below. Release 0.4
+(versionCode 4), with the one-knock quartz tick and the shadow under the
+case, was submitted for review on 17 September 2026. Releases 0.3
+(versionCode 3), 0.2 (versionCode 2) and 0.1 (versionCode 1) were
+submitted earlier the same day.**
 
 ## Store art
 

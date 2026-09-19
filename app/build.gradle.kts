@@ -31,12 +31,6 @@ val keystoreFile = vaultDrives
     .map(::file)
     .firstOrNull { it.exists() }
 
-if (keystoreFile != null) {
-    logger.lifecycle("Signing with the vault keystore at ${keystoreFile.absolutePath}")
-} else {
-    logger.lifecycle("No vault keystore found; the release build will be unsigned.")
-}
-
 val releaseKeystore = Properties()
 if (keystoreFile != null) {
     releaseKeystore.load(keystoreFile.inputStream())
@@ -62,6 +56,25 @@ val uploadStoreFile: java.io.File? = System.getenv("KEYSTORE_FILE")
 val uploadStorePassword: String? = System.getenv("KEYSTORE_PASSWORD") ?: releaseKeystore.getProperty("storePassword")
 val uploadKeyAlias: String? = System.getenv("KEY_ALIAS") ?: releaseKeystore.getProperty("keyAlias")
 val uploadKeyPassword: String? = System.getenv("KEY_PASSWORD") ?: releaseKeystore.getProperty("keyPassword")
+
+// Where the credentials came from, said out loud. A release build that finds
+// none still succeeds, so "it built" is not "it is signed"; this line is how a
+// silent unsigned build gets caught. On CI the vault is absent and the
+// KEYSTORE_FILE secret is what signs, which is why the message names both.
+if (uploadStoreFile?.exists() == true &&
+    !uploadStorePassword.isNullOrEmpty() &&
+    !uploadKeyAlias.isNullOrEmpty() &&
+    !uploadKeyPassword.isNullOrEmpty()
+) {
+    val source = if (keystoreFile != null) {
+        "the vault keystore at ${keystoreFile.absolutePath}"
+    } else {
+        "the keystore from KEYSTORE_FILE"
+    }
+    logger.lifecycle("Signing the release with $source")
+} else {
+    logger.lifecycle("No keystore from the vault or from KEYSTORE_FILE; the release build will be unsigned.")
+}
 val canSignRelease = uploadStoreFile?.exists() == true &&
     !uploadStorePassword.isNullOrEmpty() &&
     !uploadKeyAlias.isNullOrEmpty() &&

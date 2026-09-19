@@ -248,5 +248,6 @@ repo would carry audio it cannot justify), and tuning by ear alone (it is
 what produced the tap on wood).
 
 The 0.5 release candidate (versionCode 5) carries this sound and the
-tick-scheduling fix. The owner asked for the build and it was pushed to
-`main`; CI builds the signed AAB for submission.
+tick-scheduling fix. The owner asked for the build, it was pushed to
+`main`, CI built the signed AAB, and the owner submitted it for Play
+review on 19 September 2026.

@@ -7,10 +7,10 @@ trackers, no accounts, no network, no permissions. Open source under MIT.
 
 Status: release 0.5 (versionCode 5), with the measured quartz tick and
 the fix for a tick a stalled frame could swallow
-(docs/decisions.md D-012), is pushed and building; it awaits Play
-submission. Release 0.4 (versionCode 4), with the one-knock quartz tick
-and the shadow under the case, was submitted for review on 17 September
-2026. Releases 0.3, 0.2 and 0.1 were submitted earlier the same day.
+(docs/decisions.md D-012), was submitted for Play review on 19 September
+2026. Release 0.4 (versionCode 4), with the one-knock quartz tick and the
+shadow under the case, was submitted for review on 17 September 2026.
+Releases 0.3, 0.2 and 0.1 were submitted earlier the same day.
 
 <p align="center">
   <img src="play-store/screenshots/phone/02_one_oclock.png" width="170" alt="One o'clock: the hour hand on 1, the minute on 12">
