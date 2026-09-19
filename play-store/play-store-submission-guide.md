@@ -96,7 +96,7 @@ substances, gambling, user interaction, sharing location, digital
 purchases. The expected outcome is the lowest rating, suitable for ages 3
 and up. The app shows no ads and no external links.
 
-## Release notes for 0.5 (Play allows 500 characters; measured 259)
+## Release notes for 0.5 (Play allows 500 characters; measured 258)
 
 ```
 The second hand's tick is rebuilt from measurements of real quartz wall clocks: a knock on the case, not a tap on wood, and the case rings on the way a real one does. The tick also plays every second now: a stalled frame could swallow one, and no longer can.
