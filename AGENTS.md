@@ -108,11 +108,14 @@ as a dead letter.
   The live numbers are in `app/build.gradle.kts`.
 - `targetSdk` moves only together with an AGP that supports it.
 - Signing uses the shared upload keystore in the owner's vault (D-007),
-  never in the repo. Its base64 twin and the passwords live in this repo's
-  `KEYSTORE_BASE64`, `KEYSTORE_PASSWORD`, `KEY_ALIAS` and `KEY_PASSWORD`
-  secrets; a per-app keystore would win if one is ever created. Play App
-  Signing holds the app signing key, so a lost upload key can be reset
-  with Google, and the vault is backed up in a second place anyway.
+  never in the repo. The vault is one Google Drive folder and Drive mounts
+  it under a different letter on each machine, so `app/build.gradle.kts`
+  searches the drive letters and never assumes one. Its base64 twin and
+  the passwords live in this repo's `KEYSTORE_BASE64`,
+  `KEYSTORE_PASSWORD`, `KEY_ALIAS` and `KEY_PASSWORD` secrets; a per-app
+  keystore would win if one is ever created. Play App Signing holds the
+  app signing key, so a lost upload key can be reset with Google, and the
+  vault is backed up in a second place anyway.
 - Paid once on Play Console. No billing SDK in the app, ever.
 
 ## Build
@@ -187,6 +190,17 @@ from `docs/privacy.html` by GitHub Pages.
 - Picking a hand from the down point alone makes a drag that starts
   anywhere move the time. Only a touch that lands on a hand may grab it;
   `HandPick.nearest` returns null otherwise.
+- A release build that finds no keystore still succeeds, so "it built"
+  is not "it is signed". `build.gradle.kts` now prints which keystore it
+  used, or that it found none, and the signed output drops the
+  `-unsigned` suffix. The vault is one Drive folder mounted under a
+  different letter on each machine: the script searched only `E:` once,
+  and on a machine that mounts it as `D:` a release came out unsigned
+  while looking fine.
+- A v2/v3 signed APK is not a signed JAR, so `keytool -printcert` says
+  "Not a signed jar file" about it and proves nothing. Verify an APK with
+  `apksigner verify --print-certs`; verify the AAB (a JAR) with `keytool
+  -printcert -jarfile`.
 - A single synthesized click does not read as a quartz clock. Real ticks
   are two impacts ten to thirteen milliseconds apart with a noise-rich,
   broad spectrum; `:tools:makeTick` carries both. What that interval is

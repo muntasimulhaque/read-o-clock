@@ -13,14 +13,29 @@ plugins {
 // one is ever created. CI instead provides the keystore through
 // KEYSTORE_FILE and the three secrets. When neither is present (a fresh
 // clone) the release build degrades to unsigned rather than failing.
-val keystoreLayouts = listOf(
+//
+// The vault is one Google Drive folder, and Drive mounts it under a
+// different letter on each machine (D: on one, E: on another), so the
+// drive letter is searched, never assumed. Hard-coding it once made a
+// release build here come out unsigned while looking signed, because the
+// build still succeeds, just without credentials.
+val vaultPaths = listOf(
     "BSCPLC/DM (Development)/Personal Docs/Pers/My Apps/Google Play Signing Key/Read-o-Clock/keystore.properties",
     "BSCPLC/DM (Development)/Personal Docs/Pers/Google Play Signing Key/Read-o-Clock/keystore.properties",
     "BSCPLC/DM (Development)/Personal Docs/Pers/My Apps/Google Play Signing Key/keystore.properties",
 )
-val keystoreFile = keystoreLayouts
-    .map { file("E:/GDrive/$it") }
+val vaultDrives = listOf("C", "D", "E", "F", "G", "H")
+val keystoreFile = vaultDrives
+    .asSequence()
+    .flatMap { drive -> vaultPaths.asSequence().map { "$drive:/GDrive/$it" } }
+    .map(::file)
     .firstOrNull { it.exists() }
+
+if (keystoreFile != null) {
+    logger.lifecycle("Signing with the vault keystore at ${keystoreFile.absolutePath}")
+} else {
+    logger.lifecycle("No vault keystore found; the release build will be unsigned.")
+}
 
 val releaseKeystore = Properties()
 if (keystoreFile != null) {
