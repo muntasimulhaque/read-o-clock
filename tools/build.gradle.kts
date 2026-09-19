@@ -70,3 +70,13 @@ tasks.register<JavaExec>("makeArt") {
     mainClass = "io.github.muntasimulhaque.readoclock.tools.MakeArtKt"
     args = listOf(rootDir.absolutePath)
 }
+
+// Audition a tick shape: writes build/tick-tune and prints the measurements
+// against the real-clock targets. Not part of CI; it is the tuning desk.
+tasks.register<JavaExec>("tuneTick") {
+    group = "tools"
+    description = "Write the tick variants and print their measurements."
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass = "io.github.muntasimulhaque.readoclock.tools.TuneTickKt"
+    args = listOf(rootDir.absolutePath)
+}

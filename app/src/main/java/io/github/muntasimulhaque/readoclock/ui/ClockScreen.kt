@@ -32,8 +32,8 @@ import io.github.muntasimulhaque.readoclock.core.ClockLayout
 import io.github.muntasimulhaque.readoclock.core.ClockTime
 import io.github.muntasimulhaque.readoclock.core.HandPick
 import io.github.muntasimulhaque.readoclock.core.SpokenTime
+import io.github.muntasimulhaque.readoclock.core.TickSchedule
 import kotlinx.coroutines.delay
-import kotlin.math.floor
 import kotlin.math.round
 
 /**
@@ -73,28 +73,48 @@ fun ClockScreen(
     // latest reading function rather than the one it was born with.
     val currentReading by rememberUpdatedState(reading)
     val currentTick by rememberUpdatedState(onTick)
-    val refresh = { frame.value = frameOf(currentReading()) }
     val dragging = remember { mutableStateOf(false) }
+    val schedule = remember { TickSchedule() }
+    val refresh = { frame.value = frameOf(currentReading()) }
+    // A jump is a reading the movement did not step to: a resume, a TalkBack
+    // move, or the whole minute a released hand settles onto. It is marked
+    // with a counter rather than armed here, because the tick collector below
+    // is the only place the schedule is read, and the counter alone says a
+    // jump happened even when the reading comes out identical to the last
+    // one. Arming at the jump instead would race the collector, and arming
+    // only when the reading changed would leave a jump unarmed and swallow
+    // the next real tick.
+    val jumpCount = remember { mutableStateOf(0) }
+    val jump = {
+        refresh()
+        jumpCount.value++
+    }
 
     // The tick is the movement's, not the finger's: one click when the
-    // running second hand steps forward a whole second. A drag turns the
-    // gear train by hand and stays silent, and so does a jump (resume, cold
-    // start, a TalkBack move), which is not a quartz step.
+    // running second hand crosses a whole second. A drag turns the gear
+    // train by hand and stays silent, and so does a jump. TickSchedule holds
+    // that rule and the tests around it, including the stalled frame that
+    // used to swallow a tick whole.
     LaunchedEffect(Unit) {
-        var lastStep = floor(frame.value.seconds).toLong()
-        snapshotFlow { frame.value.seconds }.collect { seconds ->
-            val step = floor(seconds).toLong()
-            if (!dragging.value && step == lastStep + 1) currentTick()
-            lastStep = step
+        var armedJump = jumpCount.value
+        snapshotFlow { frame.value.seconds to jumpCount.value }.collect { (seconds, jump) ->
+            if (jump != armedJump) {
+                armedJump = jump
+                schedule.arm(seconds)
+            } else if (schedule.ticked(seconds, dragging.value)) {
+                currentTick()
+            }
         }
     }
 
     // A wake at every second boundary, and a short burst of frames through
     // the quartz bounce; between ticks the app sleeps. Dragging refreshes
-    // straight from the finger. The loop runs only while the app is resumed.
+    // straight from the finger, and the loop runs only while the app is
+    // resumed.
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(lifecycleOwner) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            jump()
             while (true) {
                 refresh()
                 val fraction = frame.value.seconds % 1.0
@@ -115,6 +135,10 @@ fun ClockScreen(
     val hourForward = stringResource(R.string.move_hour_forward)
     val hourBack = stringResource(R.string.move_hour_back)
 
+    // A jump: move the clock and re-arm, so the move is heard as the new
+    // time and never as a tick.
+    val moveBy = { delta: Double -> onMoveBy(delta); jump(); true }
+
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -123,10 +147,13 @@ fun ClockScreen(
                 contentDescription = clockName
                 stateDescription = stateText
                 customActions = listOf(
-                    CustomAccessibilityAction(minuteForward) { onMoveBy(60.0); refresh(); true },
-                    CustomAccessibilityAction(minuteBack) { onMoveBy(-60.0); refresh(); true },
-                    CustomAccessibilityAction(hourForward) { onMoveBy(3600.0); refresh(); true },
-                    CustomAccessibilityAction(hourBack) { onMoveBy(-3600.0); refresh(); true },
+                    // A move is a jump, not the running movement, so it arms
+                    // the schedule rather than ticking: a TalkBack user hears
+                    // the new time, not a click for the hands being carried.
+                    CustomAccessibilityAction(minuteForward) { moveBy(60.0) },
+                    CustomAccessibilityAction(minuteBack) { moveBy(-60.0) },
+                    CustomAccessibilityAction(hourForward) { moveBy(3600.0) },
+                    CustomAccessibilityAction(hourBack) { moveBy(-3600.0) },
                 )
             },
     ) {
@@ -182,6 +209,10 @@ fun ClockScreen(
                             }
                         } finally {
                             dragging.value = false
+                            // The finger let go, and the host settles the hand
+                            // onto a whole minute when it was close to one.
+                            // That settle is a jump, not a step.
+                            jump()
                         }
                     }
                 },

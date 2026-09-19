@@ -56,7 +56,10 @@ as a dead letter.
    per second, the way a quartz wall clock does, and that tick is the
    only sound: no music, no voices, no effects, no in-app volume
    control. It plays only while the screen is resumed and never while a
-   finger is dragging.
+   finger is dragging. The sound is synthesized in `:tools:makeTick`
+   from measurements of real clocks, never a bundled recording, and it
+   is four variants of one movement rather than one sample, because one
+   sample a second is heard as a loop.
 5. **No depiction of animate beings.** No humans, animals, faces,
    mascots, or eyes on objects, in the app, the launcher icon, or the
    store art. The clock itself is the subject; warmth comes from
@@ -125,6 +128,8 @@ export JAVA_HOME="/c/Program Files/Android/Android Studio/jbr"   # not on PATH
 ./gradlew :tools:makeArt                                 # feature graphic and 512 store icon
 ./gradlew :tools:makeIcons :tools:checkIcons             # regenerate, then pin the launcher icon
 ./gradlew :tools:makeTick :tools:checkTick               # regenerate, then pin the quartz tick
+./gradlew :tools:tuneTick                                # the tick tuning desk: measures the
+                                                        # variants against build/tick-ref
 ```
 
 ## Verifying UI: CI is the loop
@@ -184,7 +189,22 @@ from `docs/privacy.html` by GitHub Pages.
   `HandPick.nearest` returns null otherwise.
 - A single synthesized click does not read as a quartz clock. Real ticks
   are two impacts ten to thirteen milliseconds apart with a noise-rich,
-  broad spectrum; `:tools:makeTick` carries both.
+  broad spectrum; `:tools:makeTick` carries both. What that interval is
+  has taken three attempts: it is what D-010 measured, D-011 rejected as
+  a flam, and `:tools:tuneTick` now answers by measurement, so tune the
+  tick with the numbers and never by ear alone.
+- A rule that ticks only when the reading advanced by exactly one second
+  swallows the tick whenever the frame loop stalls across a boundary. That
+  was the `TickSchedule` bug, and it was heard as a randomly missing clock
+  tick, which sounds like an audio fault and is not one.
+- The tick collector must be the only place the schedule is read, and a
+  jump must reach it as a marked reading rather than as an arm performed
+  at the jump. Arming at the jump races the collector and ticks at a
+  resume; arming only when the reading changed leaves the jump unarmed and
+  swallows the next real tick.
+- A tick that is one sample repeated once a second is heard as a loop
+  inside a minute. Four variants of one movement, rotated by
+  `TickRotation`, are what keeps a synthesized clock's tick honest.
 
 ## Map
 
@@ -197,6 +217,8 @@ core/                      pure Kotlin, zero Android imports:
   ClockLayout.kt           how large the clock is on a window
   DialPalette.kt           the chosen Schoolhouse palette (D-006)
   SpokenTime.kt            the words TalkBack says
+  TickSchedule.kt          when the movement ticks (and when it stays silent)
+  TickRotation.kt          which of the four tick variants sounds next
 app/src/main/.../host/     ClockHost: the wall clock and the offset;
                            TickPlayer: the audible quartz tick
 app/src/main/.../ui/       Compose: ClockScreen (frame loop, drag, TalkBack),
@@ -205,9 +227,10 @@ app/src/androidTest/       ScreenshotTest.kt: the six store captures
 app/src/debug/             the debug-only bare host activity for the harness
 app/src/main/res/values/   strings.xml: every user-facing string
 app/src/main/res/font/     Baloo 2 (OFL), the numeral face
-app/src/main/res/raw/      tick.wav: the synthesized second-hand click
+app/src/main/res/raw/      tick_1..4.wav: the synthesized second-hand knock
 tools/                     offline generators: takes, launcher icon, store
-                           art, the tick
+                           art, the tick; TickSynth carries the sound design,
+                           TickMetrics the yardstick, TuneTick the tuning desk
 docs/                      privacy.html, OFL-Baloo2.txt, decisions.md
 play-store/                listing kit, screenshots per form factor; aab/
                            holds only the build awaiting submission
@@ -219,8 +242,8 @@ Where truth lives, by question:
 - behavior and rules: `core/` and its tests.
 - a dial proportion: `core/ClockFace.kt`.
 - a word: `app/src/main/res/values/strings.xml` and `core/SpokenTime.kt`.
-- a sound: `app/src/main/res/raw/tick.wav` and its `:tools:makeTick`
-  generator.
+- a sound: `:tools:TickSynth.kt` (the design), `app/src/main/res/raw/`
+  (the committed variants) and `:tools:TickMetrics.kt` (the yardstick).
 - a decision, or its history: `docs/decisions.md`.
 
 ## Glossary

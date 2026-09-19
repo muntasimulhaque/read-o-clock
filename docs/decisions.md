@@ -189,3 +189,64 @@ the screen does. The feature graphic and all eighteen store captures
 were regenerated from the same renderers. The owner approved both for
 the 0.4 release candidate (versionCode 4) and submitted it for Play
 review on 17 September 2026.
+
+## D-012: The measured tick, four variants, and the tick that went missing
+
+Date: 19 September 2026, after living with 0.4.
+
+Two things the owner asked for after 0.4: the sound still was not the clock
+on the wall, and the second hand sometimes stepped without a sound. The
+second complaint was the clue to the first: a tick that is heard through a
+stutter is heard for what it is.
+
+**The dropped tick was not audio, it was arithmetic.** `ClockScreen` ticked
+only when the reading advanced by exactly one whole second between frames,
+and the frame loop cannot promise to see every boundary; it wakes with a
+few milliseconds of margin and a stalled main thread can carry the reading
+across two or three seconds between wakes. The old rule then swallowed the
+tick whole: the hand stepped, the clock said nothing, and the loss looked
+random because a stall is random. `TickSchedule`, in `core/` and pinned by
+seven tests, ticks when the reading crosses one or more seconds while
+running, so a stall yields one tick, which is what the movement does, and
+never a burst. It also unwraps the reading across midnight, arms silently on
+a resume, and stays silent for a drag or a TalkBack move. `TickPlayer` grew
+to two streams and four pieces: with one stream a step could cut off its own
+predecessor, and a piece that failed to decode is now skipped, because a
+missing tick is the one thing the ear notices at once.
+
+**The sound was tuned by measurement, not by ear alone.** 0.4's tick put 69
+percent of its envelope energy inside the first five milliseconds and was
+dead by twenty; the two public domain reference recordings put 31 and 41
+percent there and keep ringing at a fifth to a half of their peak for twenty
+to forty milliseconds. 0.4 also had 17/37/38/4 across the bands where the
+real clocks have a mid-heavy 8/35/40/10: a tap on wood, not a knock on
+enamel. `:tools:makeTick` now synthesizes seven parts of the movement
+landing inside the first two milliseconds, each reading its own noise; a
+case whose dominant modes at 1.2 and 1.75 kHz ring seventeen to twenty
+milliseconds; a short low body; and three low-passed reflections, the room
+answering the knock. The result measures 3-4/42-53/40-46/1-9, a 35 to 42
+millisecond ring, and a case answer at 0.45 to 0.60 of the knock, inside the
+range the recordings share.
+
+**Four variants, because one sample a second is a loop.** A single tick
+repeated once per second is exactly what a quartz clock is, and the ear
+still finds the loop inside a minute. The four pieces are the same movement
+a little apart in level, tilt and timing; `TickRotation` in `core/` cycles
+them and its tests pin the rules, including the piece that never decodes.
+
+`:tools:tuneTick` is the new tuning desk (not a CI step): it writes the
+variants into `build/tick-tune`, and measures anything in `build/tick-ref`
+through the same yardstick. Real recordings stay out of the repo: they are a
+measuring stick, and the app ships no recorded audio. `TickMetrics` holds
+the yardstick and the targets. `:tools:checkTick` still pins the committed
+bytes, so the sound cannot drift by accident.
+
+Rejected: keeping the one-second-only rule and adding retries (it would have
+hidden the stall and made the timing worse), a single sample with no
+variants (the loop), bundling a real recording (license, drift, and the
+repo would carry audio it cannot justify), and tuning by ear alone (it is
+what produced the tap on wood).
+
+The 0.5 release candidate (versionCode 5) carries this sound and the
+tick-scheduling fix. The owner asked for the build and it was pushed to
+`main`; CI builds the signed AAB for submission.
