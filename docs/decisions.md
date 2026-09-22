@@ -287,7 +287,8 @@ Rejected: the pool below the rim, which the owner said does not make it
 float; keeping D-011's two pools; and letting the shade reach past 1.11
 radii, which shows as a clip on a short window.
 
-The 0.6 release candidate (versionCode 6) carries this shade. Its first
-CI build carried the pool below; that build was replaced before
-submission, so nothing went up to Play with it. The owner asked for the
-Play release on 22 September 2026.
+The owner asked for the Play release on 22 September 2026 while the
+first build of the candidate still carried the pool below, and submitted
+0.6 (versionCode 6) with that build and the notes that went with it. The
+shade behind the case never shipped in 0.6, so it carries the 0.7
+release candidate (versionCode 7).
