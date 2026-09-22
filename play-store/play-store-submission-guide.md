@@ -4,13 +4,14 @@ The owner's copy-paste sheet. Plain text throughout, because Play Console
 fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
-**Status: release 0.5 (versionCode 5), with the measured quartz tick and
-the fix for a tick a stalled frame could swallow, was submitted for
-review on 19 September 2026; its notes are below. Release 0.4
-(versionCode 4), with the one-knock quartz tick and the shadow under the
-case, was submitted for review on 17 September 2026. Releases 0.3
-(versionCode 3), 0.2 (versionCode 2) and 0.1 (versionCode 1) were
-submitted earlier the same day.**
+**Status: release 0.6 (versionCode 6), with the soft shade that lifts
+the clock off the wall, awaits Play submission; its notes are below.
+Release 0.5 (versionCode 5), with the measured quartz tick and the fix
+for a tick a stalled frame could swallow, was submitted for review on
+19 September 2026. Release 0.4 (versionCode 4), with the one-knock
+quartz tick and the shadow under the case, was submitted on 17 September
+2026; releases 0.3 (versionCode 3), 0.2 (versionCode 2) and 0.1
+(versionCode 1) earlier the same day.**
 
 ## Store art
 
@@ -96,6 +97,12 @@ All answers are **No**: violence, sexuality, language, controlled
 substances, gambling, user interaction, sharing location, digital
 purchases. The expected outcome is the lowest rating, suitable for ages 3
 and up. The app shows no ads and no external links.
+
+## Release notes for 0.6 (Play allows 500 characters; measured 244)
+
+```
+The shadow under the clock is redrawn as one soft pool of shade gathered just below the case, with a light gap under the rim, so the clock floats a little off the wall. Still one clock on one screen: no menu, no permissions, no network, no ads.
+```
 
 ## Release notes for 0.5 (Play allows 500 characters; measured 258)
 
