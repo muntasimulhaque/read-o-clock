@@ -291,4 +291,5 @@ The owner asked for the Play release on 22 September 2026 while the
 first build of the candidate still carried the pool below, and submitted
 0.6 (versionCode 6) with that build and the notes that went with it. The
 shade behind the case never shipped in 0.6, so it carries the 0.7
-release candidate (versionCode 7).
+release candidate (versionCode 7), which the owner submitted for Play
+review the same day.

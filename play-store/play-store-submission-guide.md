@@ -5,8 +5,8 @@ fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
 **Status: release 0.7 (versionCode 7), with the soft shade behind the
-case, awaits Play submission; its notes are below. Release 0.6
-(versionCode 6) was submitted for review on 22 September 2026; its
+case, was submitted for review on 22 September 2026; its notes are
+below. Release 0.6 (versionCode 6) was submitted the same day; its
 notes are kept below. Release 0.5 (versionCode 5), with the measured
 quartz tick and the fix for a tick a stalled frame could swallow, was
 submitted on 19 September 2026. Release 0.4 (versionCode 4), with the
