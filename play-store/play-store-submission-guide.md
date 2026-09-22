@@ -4,8 +4,8 @@ The owner's copy-paste sheet. Plain text throughout, because Play Console
 fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
-**Status: release 0.6 (versionCode 6), with the soft shade that lifts
-the clock off the wall, awaits Play submission; its notes are below.
+**Status: release 0.6 (versionCode 6), with the soft shade behind the
+case, awaits Play submission; its notes are below.
 Release 0.5 (versionCode 5), with the measured quartz tick and the fix
 for a tick a stalled frame could swallow, was submitted for review on
 19 September 2026. Release 0.4 (versionCode 4), with the one-knock
@@ -98,10 +98,10 @@ substances, gambling, user interaction, sharing location, digital
 purchases. The expected outcome is the lowest rating, suitable for ages 3
 and up. The app shows no ads and no external links.
 
-## Release notes for 0.6 (Play allows 500 characters; measured 244)
+## Release notes for 0.6 (Play allows 500 characters; measured 245)
 
 ```
-The shadow under the clock is redrawn as one soft pool of shade gathered just below the case, with a light gap under the rim, so the clock floats a little off the wall. Still one clock on one screen: no menu, no permissions, no network, no ads.
+The shadow behind the clock is redrawn the way a floating button sits on the screen: one soft, subtle shade spread behind the case on every side, a little heavier below. Still one clock on one screen: no menu, no permissions, no network, no ads.
 ```
 
 ## Release notes for 0.5 (Play allows 500 characters; measured 258)

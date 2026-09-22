@@ -6,8 +6,8 @@ gear train follows. Native Android, paid once, fully offline: no ads, no
 trackers, no accounts, no network, no permissions. Open source under MIT.
 
 Status: release 0.6 (versionCode 6) is built and awaits Play submission,
-with the soft shade that lifts the clock off the wall (docs/decisions.md
-D-013). Release 0.5 (versionCode 5), with the measured quartz tick and
+with the soft shade behind the case that lifts the clock off the screen
+(docs/decisions.md D-013). Release 0.5 (versionCode 5), with the measured quartz tick and
 the fix for a tick a stalled frame could swallow (docs/decisions.md
 D-012), was submitted for Play review on 19 September 2026. Release 0.4
 (versionCode 4) was submitted on 17 September 2026; releases 0.3, 0.2

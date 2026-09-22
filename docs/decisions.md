@@ -252,43 +252,42 @@ tick-scheduling fix. The owner asked for the build, it was pushed to
 `main`, CI built the signed AAB, and the owner submitted it for Play
 review on 19 September 2026.
 
-## D-013: The shade that floats
+## D-013: The shade behind the clock
 
 Date: 22 September 2026, after living with 0.5.
 
-The owner lived with the shadow D-011 drew and then asked for it gone:
-two pools, the broad halo and the contact smudge, did not look natural.
-Removal came first and both renderers dropped the pools that day. The
-second ask named what should take their place: the kind of shadow a
-floating object casts, and subtle.
+The owner lived with the shadow D-011 drew and asked for it gone: two
+pools, the broad halo and the contact smudge, did not look natural. Both
+renderers dropped them the same day. What should take their place took
+two tries and one correction, and the correction is the real decision.
 
-What drew next is one pool, the same numbers in the app and in the takes
-renderer: an ellipse narrower than the case at 0.84 case radii, so it can
-never ring the sides, centered 0.93 radii below the clock's center and
-squashed to 0.165 of a radius tall. Its gradient is the teaching part:
-light right under the rim at 10/255, the dark gathered a little below it
-at 26/255 about 0.06 radii down, and nothing by 1.095 radii. The light
-gap under the rim is what says lifted; dark tight against the rim, which
-the old pools had, is what says sitting.
+The first try followed the words "make it appear floating" literally: a
+pool gathered just below the case, detached from the rim by a light
+gap. The owner did not buy it and named the actual reference: the shadow
+a floating capsule or pill button gets. That shadow is not below the
+object, it is behind it: one soft, subtle pool spread around the whole
+silhouette, a touch heavier below, the way elevation reads on a button.
 
-Nothing reaches past 1.10 case radii, for the reason D-011 gave: on a
+The shade is now one pool, the same numbers in the app and in the takes
+renderer: a circle of radius 1.085 case radii on the clock's center,
+pushed down 0.02 of a radius, flat at 22/255 from its middle out to 0.90
+of its reach, then one soft ramp to nothing at its edge. Everything
+inside 0.90 sits behind the case, so only the ramp is ever seen.
+Measured on the light field: 206 at the bottom rim, which is 21/255 of
+shade, 212 at the sides, which is 16/255, 216 at the top, which is
+12/255, and field again 0.105 radii below the case and 0.065 above.
+Heavier below is what keeps it a shadow instead of a glow.
+
+Nothing reaches past 1.105 case radii, for the reason D-011 gave: on a
 short window the case nearly touches the screen and a hard clip would
-show at the edge. The close dial take framed at 0.47 of its canvas had
-only 0.064 radii of margin below the case and would have clipped the
-shade; it now frames at 0.44, the margin the app gives the case on its
-width.
+show at the edge. The close dial take frames at 0.44 of its canvas, the
+margin the app gives the case on its width, so it has the room too.
 
-Measured on the render, not judged by eye alone: on the light field the
-shade reads 215 at the rim, 204 at its darkest just below, and field
-again by 0.095 radii; on the feature graphic, whose ground is the case
-color, it is a 5/255 breath. The feature graphic was regenerated from
-the same renderer, and the eighteen store captures follow from the
-screenshots run on the push.
+Rejected: the pool below the rim, which the owner said does not make it
+float; keeping D-011's two pools; and letting the shade reach past 1.11
+radii, which shows as a clip on a short window.
 
-Rejected: keeping the wide halo, because the ring at the sides is what
-the owner called unnatural; a dark smudge tight under the rim, which
-reads as sitting; and letting the shade reach past 1.10 radii, which
-shows as a clip on a short window.
-
-The 0.6 release candidate (versionCode 6) carries this shade. The owner
-asked for the Play release on 22 September 2026.
+The 0.6 release candidate (versionCode 6) carries this shade. Its first
+CI build carried the pool below; that build was replaced before
+submission, so nothing went up to Play with it. The owner asked for the
+Play release on 22 September 2026.
