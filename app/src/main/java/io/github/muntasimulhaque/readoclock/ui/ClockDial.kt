@@ -43,39 +43,29 @@ fun ClockDial(
 }
 
 private fun DrawScope.drawCaseAndDial(center: Offset, radius: Float) {
-    // The clock hangs in light from above: a broad pool of shade under the
-    // case, and a tighter, darker pool right under the bottom rim. Neither
-    // reaches past 1.10 r, because on a short window the case nearly touches
-    // the screen and a hard clip would show at the edge. The takes renderer
-    // draws the same two pools, so the app and the store art stay one look.
-    val haloCenter = Offset(center.x, center.y + radius * 0.05f)
-    val haloRadius = radius * 1.05f
-    drawCircle(
-        brush = Brush.radialGradient(
-            colorStops = arrayOf(
-                0.80f to Color(0f, 0f, 0f, 40f / 255f),
-                1f to Color.Transparent,
-            ),
-            center = haloCenter,
-            radius = haloRadius,
-        ),
-        radius = haloRadius,
-        center = haloCenter,
-    )
-    val contactCenter = Offset(center.x, center.y + radius * 0.95f)
-    val contactRadius = radius * 0.90f
-    scale(scaleX = 1f, scaleY = 0.167f, pivot = contactCenter) {
+    // The clock floats a little off the wall: one soft pool, narrower than
+    // the case so it never rings the sides, its dark gathered just below the
+    // bottom rim and its lightest right under the rim, so the shade reads as
+    // cast, not as a smudge touching the clock. It dies at 1.095 r because
+    // on a short window the case nearly touches the screen and a hard clip
+    // would show at the edge. The takes renderer draws the same pool from
+    // the same numbers, so the app and the store art stay one look.
+    val shadowCenter = Offset(center.x, center.y + radius * 0.93f)
+    val reach = radius * 0.84f
+    scale(scaleX = 1f, scaleY = 0.196f, pivot = shadowCenter) {
         drawCircle(
             brush = Brush.radialGradient(
                 colorStops = arrayOf(
-                    0f to Color(0f, 0f, 0f, 34f / 255f),
+                    0f to Color(0f, 0f, 0f, 8f / 255f),
+                    0.50f to Color(0f, 0f, 0f, 10f / 255f),
+                    0.78f to Color(0f, 0f, 0f, 26f / 255f),
                     1f to Color.Transparent,
                 ),
-                center = contactCenter,
-                radius = contactRadius,
+                center = shadowCenter,
+                radius = reach,
             ),
-            radius = contactRadius,
-            center = contactCenter,
+            radius = reach,
+            center = shadowCenter,
         )
     }
 

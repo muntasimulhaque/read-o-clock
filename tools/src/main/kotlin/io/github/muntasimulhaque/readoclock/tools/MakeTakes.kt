@@ -69,7 +69,9 @@ private fun writeDial(file: File, skin: Skin, font: Font, secondsOfDay: Double) 
         g,
         centerX = size / 2.0,
         centerY = size / 2.0,
-        caseRadius = size * 0.47,
+        // 0.44, not 0.47: the case must keep the same margin the app gives
+        // it, or the floating shadow runs off the bottom of the take.
+        caseRadius = size * 0.44,
         skin = skin,
         secondsOfDay = secondsOfDay,
         numeralFont = font,

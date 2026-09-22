@@ -45,31 +45,28 @@ object DialRenderer {
     }
 
     private fun drawShadow(g: Graphics2D, cx: Double, cy: Double, r: Double) {
-        // The clock hangs in light from above: a broad pool of shade under
-        // the case, and a tighter, darker pool right under the bottom rim.
-        // Neither may reach past 1.10 r, because on a short window the case
-        // nearly touches the screen and a hard clip would show at the edge.
-        val haloCenter = Point2D.Double(cx, cy + r * 0.05)
-        val haloRadius = r * 1.05
-        g.paint = RadialGradientPaint(
-            haloCenter,
-            haloRadius.toFloat(),
-            floatArrayOf(0.80f, 1.0f),
-            arrayOf(Color(0, 0, 0, 40), Color(0, 0, 0, 0)),
-        )
-        g.fill(Ellipse2D.Double(haloCenter.x - haloRadius, haloCenter.y - haloRadius, haloRadius * 2, haloRadius * 2))
-
+        // The clock floats a little off the wall. One soft pool, narrower
+        // than the case so it never rings the sides, its dark gathered just
+        // below the bottom rim and its lightest right under the rim: shade
+        // cast onto the wall, not a smudge touching the clock. It dies at
+        // 1.095 r because on a short window the case nearly touches the
+        // screen and a hard clip would show at the edge.
         val previous = g.transform
-        g.translate(cx, cy + r * 0.95)
-        g.scale(1.0, 0.167)
-        val contactRadius = r * 0.90
+        g.translate(cx, cy + r * 0.93)
+        g.scale(1.0, 0.196)
+        val reach = r * 0.84
         g.paint = RadialGradientPaint(
             Point2D.Double(0.0, 0.0),
-            contactRadius.toFloat(),
-            floatArrayOf(0.0f, 1.0f),
-            arrayOf(Color(0, 0, 0, 34), Color(0, 0, 0, 0)),
+            reach.toFloat(),
+            floatArrayOf(0.0f, 0.50f, 0.78f, 1.0f),
+            arrayOf(
+                Color(0, 0, 0, 8),
+                Color(0, 0, 0, 10),
+                Color(0, 0, 0, 26),
+                Color(0, 0, 0, 0),
+            ),
         )
-        g.fill(Ellipse2D.Double(-contactRadius, -contactRadius, contactRadius * 2, contactRadius * 2))
+        g.fill(Ellipse2D.Double(-reach, -reach, reach * 2, reach * 2))
         g.transform = previous
     }
 
