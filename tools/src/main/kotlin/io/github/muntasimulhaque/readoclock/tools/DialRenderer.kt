@@ -45,29 +45,29 @@ object DialRenderer {
     }
 
     private fun drawShadow(g: Graphics2D, cx: Double, cy: Double, r: Double) {
-        // The clock floats a little off the wall. One soft pool, narrower
-        // than the case so it never rings the sides, its dark gathered just
-        // below the bottom rim and its lightest right under the rim: shade
-        // cast onto the wall, not a smudge touching the clock. It dies at
-        // 1.095 r because on a short window the case nearly touches the
-        // screen and a hard clip would show at the edge.
-        val previous = g.transform
-        g.translate(cx, cy + r * 0.93)
-        g.scale(1.0, 0.196)
-        val reach = r * 0.84
+        // The clock floats the way a floating button does: one soft,
+        // subtle pool of shade behind the case on every side, a touch
+        // heavier below, never a crescent under the rim. Flat at 22/255
+        // out to 0.90 of its reach, where it is still hidden behind the
+        // case, then one soft ramp to nothing at 1.105 r: on a short
+        // window the case nearly touches the screen and a hard clip would
+        // show at the edge.
+        val shadeCenter = Point2D.Double(cx, cy + r * 0.02)
+        val shadeRadius = r * 1.085
         g.paint = RadialGradientPaint(
-            Point2D.Double(0.0, 0.0),
-            reach.toFloat(),
-            floatArrayOf(0.0f, 0.50f, 0.78f, 1.0f),
-            arrayOf(
-                Color(0, 0, 0, 8),
-                Color(0, 0, 0, 10),
-                Color(0, 0, 0, 26),
-                Color(0, 0, 0, 0),
+            shadeCenter,
+            shadeRadius.toFloat(),
+            floatArrayOf(0.0f, 0.90f, 1.0f),
+            arrayOf(Color(0, 0, 0, 22), Color(0, 0, 0, 22), Color(0, 0, 0, 0)),
+        )
+        g.fill(
+            Ellipse2D.Double(
+                shadeCenter.x - shadeRadius,
+                shadeCenter.y - shadeRadius,
+                shadeRadius * 2,
+                shadeRadius * 2,
             ),
         )
-        g.fill(Ellipse2D.Double(-reach, -reach, reach * 2, reach * 2))
-        g.transform = previous
     }
 
     private fun drawCase(g: Graphics2D, cx: Double, cy: Double, r: Double, skin: Skin) {
