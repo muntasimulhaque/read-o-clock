@@ -5,16 +5,17 @@ fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
 **Status: release 0.8 (versionCode 8), with the feature graphic
-inside Play's cutoff zones, is the release candidate of 5 October
-2026. Release 0.7 (versionCode 7), with the soft shade behind the
-case, was submitted for review on 22 September 2026; its notes are
-below. Release 0.6 (versionCode 6) was submitted the same day; its
-notes are kept below. Release 0.5 (versionCode 5), with the measured
-quartz tick and the fix for a tick a stalled frame could swallow, was
-submitted on 19 September 2026. Release 0.4 (versionCode 4), with the
-one-knock quartz tick and the shadow under the case, was submitted on
-17 September 2026; releases 0.3 (versionCode 3), 0.2 (versionCode 2)
-and 0.1 (versionCode 1) earlier the same day.**
+inside Play's cutoff zones, was submitted for Play review on
+5 October 2026. Release 0.7 (versionCode 7), with the soft shade
+behind the case, was submitted for review on 22 September 2026; its
+notes are below. Release 0.6 (versionCode 6) was submitted the same
+day; its notes are kept below. Release 0.5 (versionCode 5), with the
+measured quartz tick and the fix for a tick a stalled frame could
+swallow, was submitted on 19 September 2026. Release 0.4
+(versionCode 4), with the one-knock quartz tick and the shadow under
+the case, was submitted on 17 September 2026; releases 0.3
+(versionCode 3), 0.2 (versionCode 2) and 0.1 (versionCode 1) earlier
+the same day.**
 
 ## Store art
 
@@ -171,6 +172,7 @@ First release. One real wall clock, nothing else. Drag the hands with a finger a
   into `play-store/aab/` with
   `gh release download latest-build -R muntasimulhaque/read-o-clock -p "*.aab" -D play-store/aab`.
   Delete it after submitting, so a stale build can never be uploaded twice.
+  The 0.8 AAB was submitted and deleted on 5 October 2026.
 - **Release notes**: the note for the current release sits above; copy it
   into the Play release together with the AAB, and hand the note over in
   chat together with the AAB.

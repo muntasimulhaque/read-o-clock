@@ -323,16 +323,18 @@ asset is already the required size, which confuses the upload size with
 the safe area. The owner re-uploads the regenerated graphic in the
 listing; no app code, no behavior and no version moved.
 
-## D-015: The 0.8 release candidate
+## D-015: The 0.8 submission
 
 Date: 5 October 2026, after D-014.
 
 The owner asked for a Play release after the feature graphic fix. The
-candidate is versionCode 8 and versionName 0.8. The APK's behavior is
+submission is versionCode 8 and versionName 0.8. The APK's behavior is
 unchanged, and the release note says the only change is the store
 banner, because the graphic is a listing asset and not a screen in
-the app. The signed AAB comes from the latest-build release, and the
-regenerated feature graphic goes into the listing with it.
+the app. The signed AAB came from the latest-build release, and the
+regenerated feature graphic went into the listing with it. The owner
+submitted 0.8 for Play review on 5 October 2026, and the AAB was
+deleted from `play-store/aab/` after the upload.
 
 Rejected: leaving the version at 0.7 and uploading the graphic alone
 (the owner asked for a release), and changing app behavior to make the

@@ -6,15 +6,16 @@ gear train follows. Native Android, paid once, fully offline: no ads, no
 trackers, no accounts, no network, no permissions. Open source under MIT.
 
 Status: release 0.8 (versionCode 8), with the feature graphic
-inside Play's cutoff zones, is the release candidate of 5 October
-2026. Release 0.7 (versionCode 7), with the soft shade behind the
-case that lifts the clock off the screen (docs/decisions.md D-013),
-was submitted for Play review on 22 September 2026, and release
-0.6 (versionCode 6) the same day. Release 0.5 (versionCode 5),
-with the measured quartz tick and the fix for a tick a stalled
-frame could swallow (docs/decisions.md D-012), was submitted on 19
-September 2026. Release 0.4 (versionCode 4) was submitted on 17
-September 2026; releases 0.3, 0.2 and 0.1 earlier the same day.
+inside Play's cutoff zones, was submitted for Play review on
+5 October 2026. Release 0.7 (versionCode 7), with the soft shade
+behind the case that lifts the clock off the screen
+(docs/decisions.md D-013), was submitted for Play review on
+22 September 2026, and release 0.6 (versionCode 6) the same day.
+Release 0.5 (versionCode 5), with the measured quartz tick and the
+fix for a tick a stalled frame could swallow (docs/decisions.md
+D-012), was submitted on 19 September 2026. Release 0.4
+(versionCode 4) was submitted on 17 September 2026; releases 0.3,
+0.2 and 0.1 earlier the same day.
 
 <p align="center">
   <img src="play-store/screenshots/phone/02_one_oclock.png" width="170" alt="One o'clock: the hour hand on 1, the minute on 12">
