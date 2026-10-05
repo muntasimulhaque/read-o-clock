@@ -171,6 +171,9 @@ First release. One real wall clock, nothing else. Drag the hands with a finger a
   into `play-store/aab/` with
   `gh release download latest-build -R muntasimulhaque/read-o-clock -p "*.aab" -D play-store/aab`.
   Delete it after submitting, so a stale build can never be uploaded twice.
+- **Release notes**: the note for the current release sits above; copy it
+  into the Play release together with the AAB, and hand the note over in
+  chat together with the AAB.
 - **Signing**: Read-o-Clock signs with the shared upload keystore in the
   owner's vault (`Google Play Signing Key/signing.keystore`, the same upload
   key the other apps use; decision D-007), never in the repo. Its base64

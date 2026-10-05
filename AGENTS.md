@@ -168,9 +168,9 @@ gh release download latest-build -R muntasimulhaque/read-o-clock -p "*.aab" -D p
 
 The AAB sits in `play-store/aab/` until the owner confirms the Play
 submission; then DELETE it, so a stale build can never be uploaded twice.
-Release notes arrive in chat as bare plain text, under 500 characters,
-counted before handing them over, and are stored in the submission guide.
-The listing kit and the Console answers live in
+The AAB and its release note go together in chat, every time: bare plain
+text, under 500 characters, counted before handing them over, and stored
+in the submission guide. The listing kit and the Console answers live in
 `play-store/play-store-submission-guide.md`. The privacy policy is served
 from `docs/privacy.html` by GitHub Pages.
 
