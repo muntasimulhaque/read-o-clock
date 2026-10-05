@@ -322,3 +322,18 @@ in the left cutoff; and keeping the edge to edge layout because the
 asset is already the required size, which confuses the upload size with
 the safe area. The owner re-uploads the regenerated graphic in the
 listing; no app code, no behavior and no version moved.
+
+## D-015: The 0.8 release candidate
+
+Date: 5 October 2026, after D-014.
+
+The owner asked for a Play release after the feature graphic fix. The
+candidate is versionCode 8 and versionName 0.8. The APK's behavior is
+unchanged, and the release note says the only change is the store
+banner, because the graphic is a listing asset and not a screen in
+the app. The signed AAB comes from the latest-build release, and the
+regenerated feature graphic goes into the listing with it.
+
+Rejected: leaving the version at 0.7 and uploading the graphic alone
+(the owner asked for a release), and changing app behavior to make the
+version number worth a bump (nothing in the clock needed it).

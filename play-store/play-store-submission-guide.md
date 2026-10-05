@@ -4,7 +4,9 @@ The owner's copy-paste sheet. Plain text throughout, because Play Console
 fields mangle markdown, and every character count below was measured with
 `wc -c`, never assumed.
 
-**Status: release 0.7 (versionCode 7), with the soft shade behind the
+**Status: release 0.8 (versionCode 8), with the feature graphic
+inside Play's cutoff zones, is the release candidate of 5 October
+2026. Release 0.7 (versionCode 7), with the soft shade behind the
 case, was submitted for review on 22 September 2026; its notes are
 below. Release 0.6 (versionCode 6) was submitted the same day; its
 notes are kept below. Release 0.5 (versionCode 5), with the measured
@@ -28,8 +30,7 @@ hand. The launcher icon set comes from `:tools:makeIcons` and is pinned by
   Play's middle seventy percent, because Play cuts the outer fifteen percent
   in some formats; only the ground reaches the edges. This is the 5 October
   2026 graphic (docs/decisions.md D-014): the 0.7 submission carried the
-  cut banner, so upload this file in the listing without waiting for a new
-  release.
+  cut banner, and 0.8 carries the safe one.
 - `play-store/play-icon-512.png`: the launcher mark, full bleed, no
   pre-rounded corners. The 0.2 mark is 0.8 of the 0.1 mark; re-upload
   this 512 icon with the 0.2 submission.
@@ -103,6 +104,12 @@ All answers are **No**: violence, sexuality, language, controlled
 substances, gambling, user interaction, sharing location, digital
 purchases. The expected outcome is the lowest rating, suitable for ages 3
 and up. The app shows no ads and no external links.
+
+## Release notes for 0.8 (Play allows 500 characters; measured 194)
+
+```
+The store banner now keeps the clock and its name inside Play's cutoff zones, so the graphic no longer comes back cut. Still one clock on one screen: no menu, no permissions, no network, no ads.
+```
 
 ## Release notes for 0.7 (Play allows 500 characters; measured 245)
 
