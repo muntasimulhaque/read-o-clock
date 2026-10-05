@@ -219,6 +219,10 @@ from `docs/privacy.html` by GitHub Pages.
 - A tick that is one sample repeated once a second is heard as a loop
   inside a minute. Four variants of one movement, rotated by
   `TickRotation`, are what keeps a synthesized clock's tick honest.
+- Play cuts a feature graphic's outer fifteen percent in some formats. A
+  1024x500 banner laid out edge to edge loses its name and its clock; only
+  the ground may reach the edges, and key content belongs inside the middle
+  seventy percent.
 
 ## Map
 

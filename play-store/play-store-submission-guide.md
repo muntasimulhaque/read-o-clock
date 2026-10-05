@@ -24,7 +24,12 @@ hand. The launcher icon set comes from `:tools:makeIcons` and is pinned by
 
 - `play-store/feature-graphic-1024x500.png`: the case color as the ground,
   a real dial at 10:10 on the left, and the name in the dial's own cream on
-  the right, nothing behind it.
+  the right, nothing behind it. The clock, its shade and the name sit inside
+  Play's middle seventy percent, because Play cuts the outer fifteen percent
+  in some formats; only the ground reaches the edges. This is the 5 October
+  2026 graphic (docs/decisions.md D-014): the 0.7 submission carried the
+  cut banner, so upload this file in the listing without waiting for a new
+  release.
 - `play-store/play-icon-512.png`: the launcher mark, full bleed, no
   pre-rounded corners. The 0.2 mark is 0.8 of the 0.1 mark; re-upload
   this 512 icon with the 0.2 submission.

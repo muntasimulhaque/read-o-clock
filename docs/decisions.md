@@ -293,3 +293,32 @@ first build of the candidate still carried the pool below, and submitted
 shade behind the case never shipped in 0.6, so it carries the 0.7
 release candidate (versionCode 7), which the owner submitted for Play
 review the same day.
+
+## D-014: The feature graphic, inside Play's cutoff zones
+
+Date: 5 October 2026, after the 0.7 submission.
+
+The feature graphic came back from the store with its name cut. Play
+renders the required 1024 by 500 asset in narrower formats, including a
+16:9 center crop, and its own cutoff diagram puts key content in the
+outer fifteen percent at risk. The old banner was laid out for the full
+canvas: the shade began at x=32 and the name ended at x=957, so the
+last letter sat on the 16:9 crop line at x=956 and the clock's left
+shade was already gone.
+
+The banner is now composed in a base layout, then scaled and centered
+to fit Play's middle seventy percent with twelve pixels of air. The case
+color still fills the whole canvas, because the ground is a background
+and may reach the edges; the clock, its shade and the name all stay
+inside the safe box. `DialRenderer` now names the shade's reach and
+drop, and `MakeArt` reads those numbers, so the shade cannot push the
+composition into a cutoff zone by accident. The regenerated graphic
+measures x=176 to x=856 and y=109 to y=384 for visible ink, which
+leaves fourteen to forty one pixels inside the middle seventy percent
+and more than a hundred pixels inside the 16:9 crop.
+
+Rejected: moving only the name left, which still left the clock's shade
+in the left cutoff; and keeping the edge to edge layout because the
+asset is already the required size, which confuses the upload size with
+the safe area. The owner re-uploads the regenerated graphic in the
+listing; no app code, no behavior and no version moved.

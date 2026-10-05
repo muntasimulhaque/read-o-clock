@@ -27,6 +27,14 @@ import kotlin.math.sin
  */
 object DialRenderer {
 
+    // The shade the app draws behind the case: how far it reaches
+    // from the case center, as a multiple of the case radius, and
+    // how far below the center its middle sits. The store art reads
+    // these numbers when it lays its composition out, so the shade
+    // can never reach a cutoff zone by accident.
+    const val ShadeReach = 1.085
+    const val ShadeDrop = 0.02
+
     fun drawClock(
         g: Graphics2D,
         centerX: Double,
@@ -49,11 +57,11 @@ object DialRenderer {
         // subtle pool of shade behind the case on every side, a touch
         // heavier below, never a crescent under the rim. Flat at 22/255
         // out to 0.90 of its reach, where it is still hidden behind the
-        // case, then one soft ramp to nothing at 1.105 r: on a short
+        // case, then one soft ramp to nothing at its edge. On a short
         // window the case nearly touches the screen and a hard clip would
         // show at the edge.
-        val shadeCenter = Point2D.Double(cx, cy + r * 0.02)
-        val shadeRadius = r * 1.085
+        val shadeCenter = Point2D.Double(cx, cy + r * ShadeDrop)
+        val shadeRadius = r * ShadeReach
         g.paint = RadialGradientPaint(
             shadeCenter,
             shadeRadius.toFloat(),
